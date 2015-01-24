@@ -12,20 +12,23 @@ import java.util.Scanner;
 
 public class TextBuddy {
 
-	private static final String FILE_READY_MESSAGE = "%1$s is ready for use";
-	private static final String FILE_INITIALIZATION_ERROR_MESSAGE = "Problem in file initialization";
-	private static final String INVALID_FILE_NAME_ERROR_MESSAGE = "Invalid File Name";
-	private static final String NO_ARGUMENTS_ERROR_MESSAGE = "No arguments.";
+	private static final String INVALID_FILE_NAME_MESSAGE = "Invalid File Name";
+	private static final String NO_ARGUMENTS_MESSAGE = "No arguments.";
 	private static final String WELCOME_MESSAGE = "Welcome to TextBuddy. ";
-	
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		
 		exitIfIncorrectArguments(args);
 		printWelcomeMessage();
-		String fileName = args[0];
-		File textFile = setEnvironment(fileName);
+		
+		File textFile = new File(args[0]);
+		
+		try {
+			textFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		while (true) {
 			System.out.print("command: ");
@@ -63,27 +66,6 @@ public class TextBuddy {
 		}
 	}
 
-	private static File setEnvironment(String fileName) {
-		File textFile = initializeTextFile(fileName);
-		printFileReadyMessage(fileName);
-		return textFile;
-	}
-	
-	public static void printFileReadyMessage(String fileName){
-		String message = String.format(FILE_READY_MESSAGE, fileName);
-		System.out.println(message);
-	}
-
-	private static File initializeTextFile(String fileName) {
-		File textFile = new File(fileName);
-		try {
-			textFile.createNewFile();
-		} catch (IOException e) {
-			exitWithErrorMessage(FILE_INITIALIZATION_ERROR_MESSAGE);
-		}
-		return textFile;
-	}
-
 	private static void exitIfIncorrectArguments(String[] args) {
 		exitIfIncorrectArguments(args);
 		exitIfInvalidFileName(args);
@@ -104,14 +86,14 @@ public class TextBuddy {
 	
 	private static void exitIfNoArguments (String[] args) {
 		if (args.length == 0) {
-			exitWithErrorMessage(NO_ARGUMENTS_ERROR_MESSAGE);
+			exitWithErrorMessage(NO_ARGUMENTS_MESSAGE);
 		}
+		System.out.println(args[0] + " is ready for use");
 	}
 	
 	private static void exitIfInvalidFileName(String[] args){
-		String fileName = args[0];
-		if (!isValidFileName(fileName)) {
-			exitWithErrorMessage(INVALID_FILE_NAME_ERROR_MESSAGE);
+		if (!isValidFileName(args[0])) {
+			exitWithErrorMessage(INVALID_FILE_NAME_MESSAGE);
 		}
 	}
 	
