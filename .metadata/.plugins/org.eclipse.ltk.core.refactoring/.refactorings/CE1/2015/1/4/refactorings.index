@@ -1,0 +1,3 @@
+1422081869944	Rename field 'myScanner'
+1422081911165	Extract method 'printWelcomeMessage'
+1422081990614	Extract constant 'WELCOME_MESSAGE'
