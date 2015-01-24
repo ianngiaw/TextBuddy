@@ -12,14 +12,15 @@ import java.util.Scanner;
 
 public class TextBuddy {
 
-	private static final String INVALID_FILE_NAME_MESSAGE = "Invalid File Name";
-	private static final String NO_ARGUMENTS_MESSAGE = "No arguments.";
 	private static final String WELCOME_MESSAGE = "Welcome to TextBuddy. ";
 	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		
-		exitIfIncorrectArguments(args);
+		if (!checkArgExists(args)) {
+			return;
+		}
+		
 		printWelcomeMessage();
 		
 		File textFile = new File(args[0]);
@@ -58,7 +59,6 @@ public class TextBuddy {
 					System.out.println("all content deleted from " + textFile.getName());
 					break;
 				case "exit" :
-					exitProgram();
 					return;
 				default :
 					break;
@@ -66,45 +66,16 @@ public class TextBuddy {
 		}
 	}
 
-	private static void exitIfIncorrectArguments(String[] args) {
-		exitIfIncorrectArguments(args);
-		exitIfInvalidFileName(args);
-	}
-
 	private static void printWelcomeMessage() {
 		System.out.print(WELCOME_MESSAGE);
 	}
 
-	private static void exitWithErrorMessage(String errorMessage) {
-		System.out.println(errorMessage);
-		exitProgram();
-	}
-	
-	private static void exitProgram() {
-		System.exit(0);
-	}
-	
-	private static void exitIfNoArguments (String[] args) {
-		if (args.length == 0) {
-			exitWithErrorMessage(NO_ARGUMENTS_MESSAGE);
-		}
-		System.out.println(args[0] + " is ready for use");
-	}
-	
-	private static void exitIfInvalidFileName(String[] args){
-		if (!isValidFileName(args[0])) {
-			exitWithErrorMessage(INVALID_FILE_NAME_MESSAGE);
-		}
-	}
-	
-	private static boolean isValidFileName (String fileName) {
-		File file = new File(fileName);
-		try {
-			file.getCanonicalPath();
-			return true;
-		} catch (IOException e) {
+	private static boolean checkArgExists (String[] args) {
+		if (args == null || args[0] == null) {
 			return false;
 		}
+		System.out.println(args[0] + " is ready for use");
+		return true;
 	}
 	
 	private static List <String> getTextList (File textFile) {
