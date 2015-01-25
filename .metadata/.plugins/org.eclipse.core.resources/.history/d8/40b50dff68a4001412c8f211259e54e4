@@ -47,26 +47,11 @@ public class TextBuddy {
 		File textFile = setEnvironment(fileName);
 		executeUntilExitCommand(textFile, fileName);
 	}
-	
-	private static void exitIfIncorrectArguments (String[] args) {
-		exitIfNoArguments(args);
-		exitIfInvalidFileName(args);
-	}
-	
-	private static void printWelcomeMessage () {
-		System.out.print(MESSAGE_WELCOME);
-	}
-	
+
 	private static String getFileNameFromArguments (String[] args) {
 		return args[0];
 	}
 
-	private static File setEnvironment (String fileName) {
-		File textFile = initializeTextFile(fileName);
-		printFileReadyMessage(fileName);
-		return textFile;
-	}
-	
 	private static void executeUntilExitCommand (File textFile, String fileName) {
 		while (true) {
 			String userCommand = requestUserCommand();
@@ -74,40 +59,6 @@ public class TextBuddy {
 		}
 	}
 
-	private static void exitIfNoArguments (String[] args) {
-		if (args.length == 0) {
-			exitWithErrorMessage(MESSAGE_NO_ARGUMENTS_ERROR);
-		}
-	}
-	
-	private static void exitIfInvalidFileName (String[] args){
-		String fileName = getFileNameFromArguments(args);
-		if (!isValidFileName(fileName)) {
-			exitWithErrorMessage(MESSAGE_INVALID_FILE_NAME_ERROR);
-		}
-	}
-	
-	private static File initializeTextFile (String fileName) {
-		File textFile = new File(fileName);
-		try {
-			textFile.createNewFile();
-		} catch (IOException e) {
-			exitWithErrorMessage(MESSAGE_FILE_INITIALIZATION_ERROR);
-		}
-		return textFile;
-	}
-	
-	public static void printFileReadyMessage (String fileName){
-		String message = String.format(MESSAGE_FILE_READY, fileName);
-		System.out.println(message);
-	}
-	
-	private static String requestUserCommand () {
-		System.out.print(MESSAGE_REQUEST_COMMAND);
-		String userCommand = _scanner.nextLine();
-		return userCommand;
-	}
-	
 	private static void executeCommand (File textFile, String fileName, String userCommand) {
 		String commandType = getFirstWord(userCommand);
 		switch (commandType) {
@@ -132,40 +83,21 @@ public class TextBuddy {
 		}
 	}
 	
-	private static void exitWithErrorMessage (String errorMessage) {
-		System.out.println(errorMessage);
-		exitProgram();
+	private static void printInvalidCommand (String userCommand) {
+		String message = String.format(MESSAGE_INVALID_COMMAND, userCommand);
+		System.out.println(message);
 	}
-	
-	private static boolean isValidFileName (String fileName) {
-		File file = new File(fileName);
-		try {
-			file.getCanonicalPath();
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
+
+	private static void executeDisplayCommand (File textFile, String fileName) {
+		List<String> lines = getLineList(textFile);
+		displayLines(lines, fileName);
 	}
-	
-	private static String getFirstWord (String userCommand) {
-		String commandType = userCommand.trim().split("\\s+")[0];
-		return commandType;
-	}
-	
+
 	private static void executeAddCommand (File textFile, String fileName, String userCommand) {
 		String textToAdd = removeFirstWord(userCommand);
 		addTextToFile(textFile, fileName, textToAdd);
 	}
-	
-	private static void executeClearCommand (File textFile, String fileName) {
-		try {
-			clearAllFromFile(textFile);
-			printClearSuccess(fileName);
-		} catch (IOException e) {
-			printClearFailure(fileName);
-		}
-	}
-	
+
 	private static void executeDeleteCommand (File textFile, String fileName, String userCommand, String commandType) {
 		String commandArgument = removeFirstWord(userCommand);
 		try {
@@ -176,34 +108,15 @@ public class TextBuddy {
 		}
 	}
 
-	private static void executeDisplayCommand (File textFile, String fileName) {
-		List<String> lines = getLineList(textFile);
-		displayLines(lines, fileName);
-	}
-	
-	private static void exitProgram () {
-		_scanner.close();
-		System.exit(0);
-	}
-	
-	private static void printInvalidCommand (String userCommand) {
-		String message = String.format(MESSAGE_INVALID_COMMAND, userCommand);
-		System.out.println(message);
-	}
-
-	private static String removeFirstWord (String userCommand) {
-		return userCommand.replace(getFirstWord(userCommand), "").trim();
-	}
-	
-	private static void addTextToFile (File textFile, String fileName, String text) {
+	private static void executeClearCommand (File textFile, String fileName) {
 		try {
-			addLine(textFile, text);
-			printAddSuccess(fileName, text);
+			clearAllFromFile(textFile);
+			printClearSuccess(fileName);
 		} catch (IOException e) {
-			printAddFailure(fileName, text);
+			printClearFailure(fileName);
 		}
 	}
-	
+
 	private static void clearAllFromFile (File textFile) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
 		out.print("");
@@ -220,20 +133,81 @@ public class TextBuddy {
 		System.out.println(clearFailureMessage);
 	}
 	
-	private static void deleteLine (File textFile, String fileName, int lineNumber) {
-		List<String> lines = getLineList(textFile);
-		String removedLine;
-		if (isValidLineNumber(lineNumber, lines)) {
-			removedLine = lines.remove(lineNumber - 1);
-		} else {
-			printLineNumberError(lineNumber);
-			return;
-		}
+	private static String getFirstWord (String userCommand) {
+		String commandType = userCommand.trim().split("\\s+")[0];
+		return commandType;
+	}
+	
+	private static String removeFirstWord (String userCommand) {
+		return userCommand.replace(getFirstWord(userCommand), "").trim();
+	}
+
+	private static String requestUserCommand () {
+		System.out.print(MESSAGE_REQUEST_COMMAND);
+		String userCommand = _scanner.nextLine();
+		return userCommand;
+	}
+
+	private static File setEnvironment (String fileName) {
+		File textFile = initializeTextFile(fileName);
+		printFileReadyMessage(fileName);
+		return textFile;
+	}
+	
+	public static void printFileReadyMessage (String fileName){
+		String message = String.format(MESSAGE_FILE_READY, fileName);
+		System.out.println(message);
+	}
+
+	private static File initializeTextFile (String fileName) {
+		File textFile = new File(fileName);
 		try {
-			saveLinesToFile(textFile, lines);
-			printLineRemoveSuccess(fileName, removedLine);
+			textFile.createNewFile();
 		} catch (IOException e) {
-			e.printStackTrace();
+			exitWithErrorMessage(MESSAGE_FILE_INITIALIZATION_ERROR);
+		}
+		return textFile;
+	}
+
+	private static void exitIfIncorrectArguments (String[] args) {
+		exitIfNoArguments(args);
+		exitIfInvalidFileName(args);
+	}
+
+	private static void printWelcomeMessage () {
+		System.out.print(MESSAGE_WELCOME);
+	}
+
+	private static void exitWithErrorMessage (String errorMessage) {
+		System.out.println(errorMessage);
+		exitProgram();
+	}
+	
+	private static void exitProgram () {
+		_scanner.close();
+		System.exit(0);
+	}
+	
+	private static void exitIfNoArguments (String[] args) {
+		if (args.length == 0) {
+			exitWithErrorMessage(MESSAGE_NO_ARGUMENTS_ERROR);
+		}
+	}
+	
+	private static void exitIfInvalidFileName (String[] args){
+		String fileName = getFileNameFromArguments(args);
+		if (!isValidFileName(fileName)) {
+			exitWithErrorMessage(MESSAGE_INVALID_FILE_NAME_ERROR);
+		}
+	}
+	
+	private static boolean isValidFileName (String fileName) {
+		File file = new File(fileName);
+		try {
+			file.getCanonicalPath();
+			return true;
+		} catch (IOException e) {
+			return false;
 		}
 	}
 	
@@ -252,7 +226,7 @@ public class TextBuddy {
 		}
 		return lines;
 	}
-
+	
 	private static void displayLines (List<String> textList, String fileName) {
 		Iterator<String> iterator = textList.iterator();
 		int lineCount = 0;
@@ -263,45 +237,6 @@ public class TextBuddy {
 			printFileEmptyMessage(fileName);
 		}
 	}
-
-	private static void addLine (File textFile, String text) throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, true)));
-		out.println(text);
-		out.close();
-	}
-	
-	private static void printAddSuccess (String fileName, String text) {
-		String successMessage = String.format(MESSAGE_ADD_SUCCESS, fileName, text);
-		System.out.println(successMessage);
-	}
-
-	private static void printAddFailure (String fileName, String text) {
-		String failureMessage = String.format(MESSAGE_ADD_FAILURE, fileName, text);
-		System.out.println(failureMessage);
-	}
-
-	private static boolean isValidLineNumber (int lineNumber, List<String> textList) {
-		return lineNumber <= textList.size() && lineNumber > 0;
-	}
-	
-	private static void printLineNumberError (int lineNumber) {
-		String message = String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
-		System.out.println(message);
-	}
-	
-	private static void saveLinesToFile (File textFile, List<String> textList) throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
-		Iterator<String> iterator = textList.iterator();
-		while (iterator.hasNext()) {
-			out.println(iterator.next());
-		}
-		out.close();
-	}
-
-	private static void printLineRemoveSuccess (String fileName, String removedLine) {
-		String successMessage = String.format(MESSAGE_DELETE_SUCCESS, fileName, removedLine);
-		System.out.println(successMessage);
-	}
 	
 	private static void printLine (int lineNumber, String line) {
 		String formattedLine = String.format(LINE_FORMAT, lineNumber, line);
@@ -311,5 +246,70 @@ public class TextBuddy {
 	private static void printFileEmptyMessage (String fileName) {
 		String message = String.format(MESSAGE_FILE_EMPTY, fileName);
 		System.out.println(message);
+	}
+	
+	private static void addTextToFile (File textFile, String fileName, String text) {
+		try {
+			addLine(textFile, text);
+			printAddSuccess(fileName, text);
+		} catch (IOException e) {
+			printAddFailure(fileName, text);
+		}
+	}
+
+	private static void addLine (File textFile, String text) throws IOException {
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, true)));
+		out.println(text);
+		out.close();
+	}
+
+	private static void printAddSuccess (String fileName, String text) {
+		String successMessage = String.format(MESSAGE_ADD_SUCCESS, fileName, text);
+		System.out.println(successMessage);
+	}
+	
+	private static void printAddFailure (String fileName, String text) {
+		String failureMessage = String.format(MESSAGE_ADD_FAILURE, fileName, text);
+		System.out.println(failureMessage);
+	}
+	
+	private static void deleteLine (File textFile, String fileName, int lineNumber) {
+		List<String> lines = getLineList(textFile);
+		String removedLine;
+		if (isValidLineNumber(lineNumber, lines)) {
+			removedLine = lines.remove(lineNumber - 1);
+		} else {
+			printLineNumberError(lineNumber);
+			return;
+		}
+		try {
+			saveLinesToFile(textFile, lines);
+			printLineRemoveSuccess(fileName, removedLine);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void printLineRemoveSuccess (String fileName, String removedLine) {
+		String successMessage = String.format(MESSAGE_DELETE_SUCCESS, fileName, removedLine);
+		System.out.println(successMessage);
+	}
+
+	private static void saveLinesToFile (File textFile, List<String> textList) throws IOException {
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
+		Iterator<String> iterator = textList.iterator();
+		while (iterator.hasNext()) {
+			out.println(iterator.next());
+		}
+		out.close();
+	}
+
+	private static void printLineNumberError (int lineNumber) {
+		String message = String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
+		System.out.println(message);
+	}
+
+	private static boolean isValidLineNumber (int lineNumber, List<String> textList) {
+		return lineNumber <= textList.size() && lineNumber > 0;
 	}
 }
