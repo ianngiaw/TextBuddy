@@ -12,30 +12,28 @@ import java.util.Scanner;
 
 public class TextBuddy {
 
-	// Messages printed
-	private static final String MESSAGE_ADD_FAILURE = "failed adding \"%2$s\" to %1$s";
 	private static final String MESSAGE_ADD_SUCCESS = "added to %1$s: \"%2$s\"";
+	private static final String MESSAGE_ADD_FAILURE = "failed adding \"%2$s\" to %1$s";
+	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
+	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
+	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"";
+	private static final String LINE_FORMAT = "%1$d. %2$s";
+	private static final String MESSAGE_FILE_EMPTY = "%1$s is empty";
+	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
 	private static final String MESSAGE_CLEAR_FAILURE = "an error had occurred while trying to clear %1$s";
 	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s";
-	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"";
-	private static final String MESSAGE_FILE_EMPTY = "%1$s is empty";
-	private static final String MESSAGE_FILE_INITIALIZATION_ERROR = "Problem in file initialization";
-	private static final String MESSAGE_FILE_READY = "%1$s is ready for use";
-	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
-	private static final String MESSAGE_INVALID_FILE_NAME_ERROR = "invalid file name provided";
-	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
-	private static final String MESSAGE_NO_ARGUMENTS_ERROR = "no file name provided";
-	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
-	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. ";
-
-	private static final String LINE_FORMAT = "%1$d. %2$s";
-	private static final String ADD_COMMAND = "add";
+	private static final String EXIT_COMMAND = "exit";
 	private static final String CLEAR_COMMAND = "clear";
 	private static final String DELETE_COMMAND = "delete";
 	private static final String DISPLAY_COMMAND = "display";
-	private static final String EXIT_COMMAND = "exit";
+	private static final String ADD_COMMAND = "add";
+	private static final String MESSAGE_FILE_READY = "%1$s is ready for use";
+	private static final String MESSAGE_FILE_INITIALIZATION_ERROR = "Problem in file initialization";
+	private static final String MESSAGE_INVALID_FILE_NAME_ERROR = "Invalid File Name";
+	private static final String MESSAGE_NO_ARGUMENTS_ERROR = "No arguments.";
+	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. ";
 	
-	private static Scanner _scanner = new Scanner(System.in);
+	private static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
 		exitIfIncorrectArguments(args);
@@ -142,7 +140,7 @@ public class TextBuddy {
 
 	private static String requestUserCommand() {
 		System.out.print(MESSAGE_REQUEST_COMMAND);
-		String userCommand = _scanner.nextLine();
+		String userCommand = scanner.nextLine();
 		return userCommand;
 	}
 
@@ -182,7 +180,7 @@ public class TextBuddy {
 	}
 	
 	private static void exitProgram() {
-		_scanner.close();
+		scanner.close();
 		System.exit(0);
 	}
 	
