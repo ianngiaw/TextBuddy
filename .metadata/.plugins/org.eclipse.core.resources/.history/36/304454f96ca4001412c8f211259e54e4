@@ -10,13 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * The TextBuddy program is a simplified command line text file editor 
- * that can add lines to the bottom of text files and can also delete
- * lines from the file.
- * 
- * @author Ngiaw Ting An Ian
- */
 public class TextBuddy {
 
 	// Messages printed
@@ -47,11 +40,6 @@ public class TextBuddy {
 	
 	private static Scanner _scanner = new Scanner(System.in);
 	
-	/**
-	 * The main method of the TextBuddy program
-	 * 
-	 * @param args Command line argument which gives the name of the text file to be edited
-	 */
 	public static void main (String[] args) {
 		exitIfIncorrectArguments(args);
 		printWelcomeMessage();
@@ -73,25 +61,12 @@ public class TextBuddy {
 		return args[0];
 	}
 
-	/**
-	 * Prepares the text file to be edited.
-	 * 
-	 * @param fileName The name of the file to be edited
-	 * @return A File Object of the provided file name
-	 */
 	private static File setEnvironment (String fileName) {
 		File textFile = initializeTextFile(fileName);
 		printFileReadyMessage(fileName);
 		return textFile;
 	}
 	
-	/**
-	 * A method that runs in an infinite loop requesting for commands
-	 * until the user inputs an exit command.
-	 * 
-	 * @param textFile The file to be edited
-	 * @param fileName The name of the file to be edited
-	 */
 	private static void executeUntilExitCommand (File textFile, String fileName) {
 		while (true) {
 			String userCommand = requestUserCommand();
@@ -112,14 +87,6 @@ public class TextBuddy {
 		}
 	}
 	
-	/**
-	 * Creates a new java File Object based on the file name provided
-	 * If the file does not exist, it will create a new file with the
-	 * provided name.
-	 * 
-	 * @param fileName The name of the file to be edited
-	 * @return java File Object of the file to be edited
-	 */
 	private static File initializeTextFile (String fileName) {
 		File textFile = new File(fileName);
 		try {
@@ -141,14 +108,6 @@ public class TextBuddy {
 		return userCommand;
 	}
 	
-	/**
-	 * This method chooses the appropriate actions to carry out based on
-	 * the user's input command(s)
-	 * 
-	 * @param textFile File Object of the text file to be edited
-	 * @param fileName Name of the file to be edited
-	 * @param userCommand Input provided by the user
-	 */
 	private static void executeCommand (File textFile, String fileName, String userCommand) {
 		String commandType = getFirstWord(userCommand);
 		switch (commandType) {
@@ -278,13 +237,6 @@ public class TextBuddy {
 		}
 	}
 	
-	/**
-	 * Takes in an text file and converts each line in the text
-	 * to a string, storing each string in a List Object
-	 * 
-	 * @param textFile File Object where the text is stored
-	 * @return List Object containing each line of the text file
-	 */
 	private static List <String> getLineList (File textFile) {
 		List<String> lines = new ArrayList<String>();
 		String currentLine;
@@ -329,9 +281,7 @@ public class TextBuddy {
 	}
 
 	private static boolean isValidLineNumber (int lineNumber, List<String> textList) {
-		boolean isLessThanOrEqualToList = lineNumber <= textList.size();
-		boolean isMoreThanZero = lineNumber > 0;
-		return isLessThanOrEqualToList && isMoreThanZero;
+		return lineNumber <= textList.size() && lineNumber > 0;
 	}
 	
 	private static void printLineNumberError (int lineNumber) {
