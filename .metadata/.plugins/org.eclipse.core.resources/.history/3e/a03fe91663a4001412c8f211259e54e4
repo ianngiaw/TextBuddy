@@ -12,16 +12,17 @@ import java.util.Scanner;
 
 public class TextBuddy {
 
-	private static final String MESSAGE_ADD_SUCCESS = "added to %1$s: \"%2$s\"";
-	private static final String MESSAGE_ADD_FAILURE = "failed adding \"%2$s\" to %1$s";
-	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
-	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
-	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"";
+	private static final String ADD_SUCCESS_MESSAGE = "added to %1$s: \"%2$s\"";
+	private static final String ADD_FAILURE_MESSAGE = "failed adding \"%2$s\" to %1$s";
+	private static final String REQUEST_COMMAND_MESSAGE = "command: ";
+	private static final String LINE_NUMBER_ERROR_MESSAGE = "Line %1$d does not exist";
+	private static final String DELETE_SUCCESS_MESSAGE = "deleted from %1$s: \"%2$s\"";
 	private static final String LINE_FORMAT = "%1$d. %2$s";
-	private static final String MESSAGE_FILE_EMPTY = "%1$s is empty";
-	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
-	private static final String MESSAGE_CLEAR_FAILURE = "an error had occurred while trying to clear %1$s";
-	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s";
+	private static final String FILE_EMPTY_MESSAGE = "%1$s is empty";
+	private static final String INVALID_COMMAND_MESSAGE = "\"%1$s\" is an invalid command";
+	private static final String CLEAR_FAILURE_MESSAGE = "an error had occurred while trying to clear %1$s";
+	private static final String CLEAR_SUCCESS_MESSAGE = "all content deleted from %1$s";
+	private static final String INVALID_COMMAND_ARGUMENT_ERROR_MESSAGE = "\"%1$s\" is an invalid argument for the %2$s command";
 	private static final String EXIT_COMMAND = "exit";
 	private static final String CLEAR_COMMAND = "clear";
 	private static final String DELETE_COMMAND = "delete";
@@ -73,13 +74,13 @@ public class TextBuddy {
 				exitProgram();
 				return;
 			default :
-				printInvalidCommand(userCommand);
+				printInvalidCommandMessage(userCommand);
 				break;
 		}
 	}
 	
-	private static void printInvalidCommand(String userCommand) {
-		String message = String.format(MESSAGE_INVALID_COMMAND, userCommand);
+	private static void printInvalidCommandMessage(String userCommand) {
+		String message = String.format(INVALID_COMMAND_MESSAGE, userCommand);
 		System.out.println(message);
 	}
 
@@ -100,7 +101,7 @@ public class TextBuddy {
 			int lineToDelete = Integer.parseInt(commandArgument);
 			deleteLine(textFile, fileName, lineToDelete);
 		} catch (NumberFormatException e) {
-			printInvalidCommand(userCommand);
+			printInvalidCommandArguments(commandArgument, commandType);
 		}
 	}
 
@@ -120,13 +121,18 @@ public class TextBuddy {
 	}
 
 	private static void printClearSuccess(String fileName) {
-		String clearSuccessMessage = String.format(MESSAGE_CLEAR_SUCCESS, fileName);
+		String clearSuccessMessage = String.format(CLEAR_SUCCESS_MESSAGE, fileName);
 		System.out.println(clearSuccessMessage);
 	}
 	
 	private static void printClearFailure(String fileName) {
-		String clearFailureMessage = String.format(MESSAGE_CLEAR_FAILURE, fileName);
+		String clearFailureMessage = String.format(CLEAR_FAILURE_MESSAGE, fileName);
 		System.out.println(clearFailureMessage);
+	}
+
+	private static void printInvalidCommandArguments(String argument, String command) {
+		String message = String.format(INVALID_COMMAND_ARGUMENT_ERROR_MESSAGE, argument, command);
+		System.out.println(message);
 	}
 	
 	private static String getFirstWord (String userCommand) {
@@ -139,7 +145,7 @@ public class TextBuddy {
 	}
 
 	private static String requestUserCommand() {
-		System.out.print(MESSAGE_REQUEST_COMMAND);
+		System.out.print(REQUEST_COMMAND_MESSAGE);
 		String userCommand = scanner.nextLine();
 		return userCommand;
 	}
@@ -240,7 +246,7 @@ public class TextBuddy {
 	}
 	
 	private static void printFileEmptyMessage(String fileName) {
-		String message = String.format(MESSAGE_FILE_EMPTY, fileName);
+		String message = String.format(FILE_EMPTY_MESSAGE, fileName);
 		System.out.println(message);
 	}
 	
@@ -260,12 +266,12 @@ public class TextBuddy {
 	}
 
 	private static void printAddSuccess(String fileName, String text) {
-		String successMessage = String.format(MESSAGE_ADD_SUCCESS, fileName, text);
+		String successMessage = String.format(ADD_SUCCESS_MESSAGE, fileName, text);
 		System.out.println(successMessage);
 	}
 	
 	private static void printAddFailure(String fileName, String text) {
-		String failureMessage = String.format(MESSAGE_ADD_FAILURE, fileName, text);
+		String failureMessage = String.format(ADD_FAILURE_MESSAGE, fileName, text);
 		System.out.println(failureMessage);
 	}
 	
@@ -287,7 +293,7 @@ public class TextBuddy {
 	}
 
 	private static void printLineRemoveSuccess(String fileName, String removedLine) {
-		String successMessage = String.format(MESSAGE_DELETE_SUCCESS, fileName, removedLine);
+		String successMessage = String.format(DELETE_SUCCESS_MESSAGE, fileName, removedLine);
 		System.out.println(successMessage);
 	}
 
@@ -302,7 +308,7 @@ public class TextBuddy {
 	}
 
 	private static void printLineNumberError(int lineNumber) {
-		String message = String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
+		String message = String.format(LINE_NUMBER_ERROR_MESSAGE, lineNumber);
 		System.out.println(message);
 	}
 

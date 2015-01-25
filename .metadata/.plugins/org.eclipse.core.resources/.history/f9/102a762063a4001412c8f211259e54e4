@@ -22,6 +22,7 @@ public class TextBuddy {
 	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
 	private static final String MESSAGE_CLEAR_FAILURE = "an error had occurred while trying to clear %1$s";
 	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s";
+	private static final String INVALID_COMMAND_ARGUMENT_ERROR_MESSAGE = "\"%1$s\" is an invalid argument for the %2$s command";
 	private static final String EXIT_COMMAND = "exit";
 	private static final String CLEAR_COMMAND = "clear";
 	private static final String DELETE_COMMAND = "delete";
@@ -127,6 +128,11 @@ public class TextBuddy {
 	private static void printClearFailure(String fileName) {
 		String clearFailureMessage = String.format(MESSAGE_CLEAR_FAILURE, fileName);
 		System.out.println(clearFailureMessage);
+	}
+
+	private static void printInvalidCommandArguments(String argument, String command) {
+		String message = String.format(INVALID_COMMAND_ARGUMENT_ERROR_MESSAGE, argument, command);
+		System.out.println(message);
 	}
 	
 	private static String getFirstWord (String userCommand) {
