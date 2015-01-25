@@ -14,3 +14,4 @@
 1422170922050	Rename field 'NO_ARGUMENTS_ERROR_MESSAGE'
 1422170930414	Rename field 'WELCOME_MESSAGE'
 1422170941846	Rename field 'scanner'
+1422171576754	Rename method 'getLinesList'

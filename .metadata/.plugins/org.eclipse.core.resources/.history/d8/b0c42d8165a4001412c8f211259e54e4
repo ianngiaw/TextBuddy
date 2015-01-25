@@ -243,7 +243,7 @@ public class TextBuddy {
 		System.out.println(formattedLine);
 	}
 	
-	private static void printFileEmptyMessage (String fileName) {
+	private static void printFileEmptyMessage(String fileName) {
 		String message = String.format(MESSAGE_FILE_EMPTY, fileName);
 		System.out.println(message);
 	}
@@ -257,18 +257,18 @@ public class TextBuddy {
 		}
 	}
 
-	private static void addLine (File textFile, String text) throws IOException {
+	private static void addLine(File textFile, String text) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, true)));
 		out.println(text);
 		out.close();
 	}
 
-	private static void printAddSuccess (String fileName, String text) {
+	private static void printAddSuccess(String fileName, String text) {
 		String successMessage = String.format(MESSAGE_ADD_SUCCESS, fileName, text);
 		System.out.println(successMessage);
 	}
 	
-	private static void printAddFailure (String fileName, String text) {
+	private static void printAddFailure(String fileName, String text) {
 		String failureMessage = String.format(MESSAGE_ADD_FAILURE, fileName, text);
 		System.out.println(failureMessage);
 	}
@@ -290,12 +290,13 @@ public class TextBuddy {
 		}
 	}
 
-	private static void printLineRemoveSuccess (String fileName, String removedLine) {
+	private static void printLineRemoveSuccess(String fileName, String removedLine) {
 		String successMessage = String.format(MESSAGE_DELETE_SUCCESS, fileName, removedLine);
 		System.out.println(successMessage);
 	}
 
-	private static void saveLinesToFile (File textFile, List<String> textList) throws IOException {
+	private static void saveLinesToFile(File textFile, List<String> textList)
+			throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
 		Iterator<String> iterator = textList.iterator();
 		while (iterator.hasNext()) {
@@ -304,12 +305,13 @@ public class TextBuddy {
 		out.close();
 	}
 
-	private static void printLineNumberError (int lineNumber) {
+	private static void printLineNumberError(int lineNumber) {
 		String message = String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
 		System.out.println(message);
 	}
 
-	private static boolean isValidLineNumber (int lineNumber, List<String> textList) {
+	private static boolean isValidLineNumber(int lineNumber,
+			List<String> textList) {
 		return lineNumber <= textList.size() && lineNumber > 0;
 	}
 }
