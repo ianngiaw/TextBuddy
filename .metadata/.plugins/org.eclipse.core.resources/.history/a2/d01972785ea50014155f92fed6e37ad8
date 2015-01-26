@@ -26,8 +26,8 @@ public class TextBuddy {
 		printWelcomeMessage();
 		exitIfIncorrectArguments(args);
 		String fileName = getFileNameFromArguments(args);
-		TextBuddyHelper helper = new TextBuddyHelper(fileName);
-		executeUntilExitCommand(new Scanner(System.in), helper);
+		TextBuddyHelper helper = new TextBuddyHelper(fileName, new Scanner(System.in));
+		executeUntilExitCommand(helper);
 	}
 	
 	private static void exitIfIncorrectArguments (String[] args) {

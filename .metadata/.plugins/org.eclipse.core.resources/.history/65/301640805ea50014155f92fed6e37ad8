@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 public class TextBuddyHelper {
 	
@@ -22,6 +23,7 @@ public class TextBuddyHelper {
 	private static final String MESSAGE_FILE_READY = "%1$s is ready for use";
 	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
 	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
+	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
 	
 	// Format of each line printed in the display command
 	private static final String LINE_FORMAT = "%1$d. %2$s";
@@ -35,10 +37,18 @@ public class TextBuddyHelper {
 	
 	private File _textFile;
 	private String _fileName;
+	private Scanner _scanner;
 	
-	public TextBuddyHelper (String fileName) {
+	public TextBuddyHelper (String fileName, Scanner scanner) {
+		_scanner = scanner;
 		_fileName = fileName;
 		setEnvironment();
+	}
+	
+	public String requestUserCommand () {
+		System.out.print(MESSAGE_REQUEST_COMMAND);
+		String userCommand = _scanner.nextLine();
+		return userCommand;
 	}
 	
 	/**

@@ -14,7 +14,6 @@ public class TextBuddy {
 	// Messages printed
 	private static final String MESSAGE_INVALID_FILE_NAME = "invalid file name provided";
 	private static final String MESSAGE_NO_ARGUMENTS = "no file name provided";
-	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
 	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. ";
 	
 	/**
@@ -26,8 +25,8 @@ public class TextBuddy {
 		printWelcomeMessage();
 		exitIfIncorrectArguments(args);
 		String fileName = getFileNameFromArguments(args);
-		TextBuddyHelper helper = new TextBuddyHelper(fileName);
-		executeUntilExitCommand(new Scanner(System.in), helper);
+		TextBuddyHelper helper = new TextBuddyHelper(fileName, new Scanner(System.in));
+		executeUntilExitCommand(helper);
 	}
 	
 	private static void exitIfIncorrectArguments (String[] args) {
@@ -82,16 +81,10 @@ public class TextBuddy {
 	 * @param textFile The file to be edited
 	 * @param fileName The name of the file to be edited
 	 */
-	private static void executeUntilExitCommand (Scanner scanner, TextBuddyHelper helper) {
+	private static void executeUntilExitCommand (TextBuddyHelper helper) {
 		while (true) {
-			String userCommand = requestUserCommand(scanner);
+			String userCommand = helper.requestUserCommand();
 			helper.executeCommand(userCommand);
 		}
-	}
-	
-	public static String requestUserCommand (Scanner scanner) {
-		System.out.print(MESSAGE_REQUEST_COMMAND);
-		String userCommand = scanner.nextLine();
-		return userCommand;
 	}
 }

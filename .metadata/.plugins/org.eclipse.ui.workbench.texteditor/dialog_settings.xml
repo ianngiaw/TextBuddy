@@ -2,12 +2,16 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="fileName" key="selection"/>
+		<item value="void print" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="void print"/>
+			<item value="getFir"/>
+			<item value="exitPro"/>
+			<item value="exitwith"/>
 			<item value="textFile.getName()"/>
 		</list>
 		<list key="replacehistory">
