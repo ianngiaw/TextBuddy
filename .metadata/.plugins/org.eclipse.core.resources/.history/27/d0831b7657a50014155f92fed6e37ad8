@@ -1,0 +1,97 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class TextBuddyHelper {
+
+	private static final String MESSAGE_FILE_INITIALIZATION_ERROR = "Problem in file initialization";
+	private static final String MESSAGE_FILE_READY = "%1$s is ready for use";
+	private static final String MESSAGE_INVALID_FILE_NAME = "invalid file name provided";
+	private static final String MESSAGE_NO_ARGUMENTS = "no file name provided";
+	
+	private File _textFile;
+	private String _fileName;
+	private Scanner _scanner;
+	
+	public TextBuddyHelper (String[] args, Scanner scanner) {
+		_scanner = scanner;
+		exitIfIncorrectArguments(args);
+		_fileName = getFileNameFromArguments(args);
+		setEnvironment();
+	}
+	
+	private void exitIfIncorrectArguments (String[] args) {
+		exitIfNoArguments(args);
+		exitIfInvalidFileName(args);
+	}
+	
+	private static String getFileNameFromArguments (String[] args) {
+		return args[0];
+	}
+	
+	/**
+	 * Prepares the text file to be edited. To be called only by constructor.
+	 * 
+	 * @param fileName The name of the file to be edited
+	 * @return A File Object of the provided file name
+	 */
+	private void setEnvironment () {
+		initializeTextFile();
+		printFileReadyMessage(_fileName);
+	}
+	
+	private void exitIfNoArguments (String[] args) {
+		if (args.length == 0) {
+			exitWithErrorMessage(MESSAGE_NO_ARGUMENTS);
+		}
+	}
+	
+	private void exitIfInvalidFileName (String[] args){
+		String fileName = getFileNameFromArguments(args);
+		if (!isValidFileName(fileName)) {
+			exitWithErrorMessage(MESSAGE_INVALID_FILE_NAME);
+		}
+	}
+
+	/**
+	 * Creates a new java File Object based on the file name provided
+	 * If the file does not exist, it will create a new file with the
+	 * provided name.
+	 * 
+	 * @param fileName The name of the file to be edited
+	 * @return java File Object of the file to be edited
+	 */
+	private void initializeTextFile () {
+		_textFile = new File(_fileName);
+		try {
+			_textFile.createNewFile();
+		} catch (IOException e) {
+			exitWithErrorMessage(MESSAGE_FILE_INITIALIZATION_ERROR);
+		}
+	}
+	
+	public static void printFileReadyMessage (String fileName){
+		String message = String.format(MESSAGE_FILE_READY, fileName);
+		System.out.println(message);
+	}
+	
+	private void exitWithErrorMessage (String errorMessage) {
+		System.out.println(errorMessage);
+		exitProgram();
+	}
+	
+	private static boolean isValidFileName (String fileName) {
+		File file = new File(fileName);
+		try {
+			file.getCanonicalPath();
+			return true;
+		} catch (IOException e) {
+			return false;
+		}
+	}
+	
+	private void exitProgram () {
+		_scanner.close();
+		System.exit(0);
+	}
+}

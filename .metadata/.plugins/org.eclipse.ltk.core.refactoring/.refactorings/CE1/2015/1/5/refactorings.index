@@ -15,3 +15,7 @@
 1422170930414	Rename field 'WELCOME_MESSAGE'
 1422170941846	Rename field 'scanner'
 1422171576754	Rename method 'getLinesList'
+1422275372727	Rename field 'MESSAGE_INVALID_FILE_NAME_ERROR'
+1422275381983	Rename field 'MESSAGE_NO_ARGUMENTS_ERROR'
+1422276529750	Rename method 'addTextToFile'
+1422276535504	Rename local variable 'text'

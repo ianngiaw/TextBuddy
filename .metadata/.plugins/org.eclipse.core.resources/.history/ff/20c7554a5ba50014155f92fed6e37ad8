@@ -1,0 +1,62 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * The TextBuddy program is a simplified command line text file editor 
+ * that can add lines to the bottom of text files and can also delete
+ * lines from the file.
+ * 
+ * @author Ngiaw Ting An Ian
+ */
+public class TextBuddy {
+	
+	// Messages printed
+	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
+	private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. ";
+
+	private static Scanner _scanner = new Scanner(System.in);
+	
+	/**
+	 * The main method of the TextBuddy program
+	 * 
+	 * @param args Command line argument which gives the name of the text file to be edited
+	 */
+	public static void main (String[] args) {
+		TextBuddyHelper helper = new TextBuddyHelper(args, new Scanner(System.in));
+		printWelcomeMessage();
+		executeUntilExitCommand(textFile, fileName);
+	}
+	
+	private static void printWelcomeMessage () {
+		System.out.print(MESSAGE_WELCOME);
+	}
+	
+	/**
+	 * A method that runs in an infinite loop requesting for commands
+	 * until the user inputs an exit command.
+	 * 
+	 * @param textFile The file to be edited
+	 * @param fileName The name of the file to be edited
+	 */
+	private static void executeUntilExitCommand (File textFile, String fileName) {
+		while (true) {
+			String userCommand = requestUserCommand();
+			executeCommand(textFile, fileName, userCommand);
+		}
+	}
+	
+	private static String requestUserCommand () {
+		System.out.print(MESSAGE_REQUEST_COMMAND);
+		String userCommand = _scanner.nextLine();
+		return userCommand;
+	}
+}

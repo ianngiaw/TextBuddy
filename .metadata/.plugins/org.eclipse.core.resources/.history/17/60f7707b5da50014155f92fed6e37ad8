@@ -71,7 +71,7 @@ public class TextBuddy {
 	}
 	
 	private static void printWelcomeMessage () {
-		System.out.print(MESSAGE_WELCOME);
+		System.out.println(MESSAGE_WELCOME);
 	}
 	
 	/**
