@@ -1,0 +1,13 @@
+add this is a line
+add this is another line
+add what?! another line?!
+    add tabbed line with 4 spaces at end    
+display
+delete 1
+delete line 1
+delete 2
+display
+add last line
+display
+clear
+exit
