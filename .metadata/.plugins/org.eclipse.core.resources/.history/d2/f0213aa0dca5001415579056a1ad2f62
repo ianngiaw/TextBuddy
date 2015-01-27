@@ -9,13 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * This is a helper class for the TextBuddy class which is
- * created by the main method of the TextBuddy class
- * 
- * @author Ngiaw Ting An, Ian
- *
- */
 public class TextBuddyHelper {
 	
 	// Messages printed
@@ -40,7 +33,6 @@ public class TextBuddyHelper {
 	private static final String DISPLAY_COMMAND = "display";
 	private static final String EXIT_COMMAND = "exit";
 	
-	// Instance variables
 	private File _textFile;
 	private String _fileName;
 	
@@ -95,7 +87,7 @@ public class TextBuddyHelper {
 				executeClearCommand();
 				break;
 			case DELETE_COMMAND :
-				executeDeleteCommand(userCommand);
+				executeDeleteCommand(userCommand, commandType);
 				break;
 			case DISPLAY_COMMAND :
 				executeDisplayCommand();
@@ -109,20 +101,11 @@ public class TextBuddyHelper {
 		}
 	}
 	
-	/**
-	 * Executes the add command, which adds a line to the end
-	 * of the text file
-	 * 
-	 * @param userCommand The full command input by the user
-	 */
 	private void executeAddCommand (String userCommand) {
 		String textToAdd = removeFirstWord(userCommand);
 		addLine(textToAdd);
 	}
 	
-	/**
-	 * Executes the clear command, which clears the entire text file
-	 */
 	private void executeClearCommand () {
 		try {
 			clearAllFromFile(_textFile);
@@ -132,13 +115,7 @@ public class TextBuddyHelper {
 		}
 	}
 	
-	/**
-	 * Executes the delete command, which deletes specified line from
-	 * the text file
-	 * 
-	 * @param userCommand The command input by the user
-	 */
-	private void executeDeleteCommand (String userCommand) {
+	private void executeDeleteCommand (String userCommand, String commandType) {
 		String commandArgument = removeFirstWord(userCommand);
 		try {
 			int lineToDelete = Integer.parseInt(commandArgument);
@@ -148,21 +125,11 @@ public class TextBuddyHelper {
 		}
 	}
 
-	/**
-	 * Executes the display command, which displays each line in the
-	 * text file
-	 */
 	private void executeDisplayCommand () {
 		List<String> lines = getLineList(_textFile);
 		displayLines(lines);
 	}
 	
-	/**
-	 * Adds a line to the text file, printing a message if the add
-	 * command was executed successfully and a message if it failed
-	 * 
-	 * @param line The line to be added to the end of the _textFile
-	 */
 	private void addLine (String line) {
 		try {
 			addLineToFile(_textFile, line);
@@ -172,14 +139,8 @@ public class TextBuddyHelper {
 		}
 	}
 
-	/**
-	 * Iterates through a list of strings printing out each string
-	 * beginning with its index number
-	 * 
-	 * @param lineList A list of strings to be printed
-	 */
-	private void displayLines (List<String> lineList) {
-		Iterator<String> iterator = lineList.iterator();
+	private void displayLines (List<String> textList) {
+		Iterator<String> iterator = textList.iterator();
 		int lineCount = 0;
 		while (iterator.hasNext()) {
 			printLine(++lineCount, iterator.next());
@@ -189,11 +150,6 @@ public class TextBuddyHelper {
 		}
 	}
 	
-	/**
-	 * Deletes a specified line from _textFile
-	 * 
-	 * @param lineNumber The line to be deleted
-	 */
 	private void deleteLine (int lineNumber) {
 		List<String> lines = getLineList(_textFile);
 		String removedLine;
@@ -213,25 +169,12 @@ public class TextBuddyHelper {
 
 	// Static methods
 	
-	/**
-	 * Adds a string of text to the end of a file
-	 * 
-	 * @param textFile The file to edited
-	 * @param text The string to be added 
-	 * @throws IOException
-	 */
 	private static void addLineToFile (File textFile, String text) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, true)));
 		out.println(text);
 		out.close();
 	}
 
-	/**
-	 * Clears an entire file of its contents
-	 * 
-	 * @param textFile The file to be cleared
-	 * @throws IOException
-	 */
 	private static void clearAllFromFile (File textFile) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
 		out.print("");
@@ -267,14 +210,6 @@ public class TextBuddyHelper {
 		return isLessThanOrEqualToList && isMoreThanZero;
 	}
 
-	/**
-	 * Clears the contents of a text file, then saves each string
-	 * in a list of strings as a new line in a text file
-	 * 
-	 * @param textFile The text file to be edited
-	 * @param textList A list of strings to be added to the text file
-	 * @throws IOException
-	 */
 	private static void saveLinesToFile (File textFile, List<String> textList) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
 		Iterator<String> iterator = textList.iterator();

@@ -19,3 +19,4 @@
 1422275381983	Rename field 'MESSAGE_NO_ARGUMENTS_ERROR'
 1422276529750	Rename method 'addTextToFile'
 1422276535504	Rename local variable 'text'
+1422332404864	Rename local variable 'textList'
