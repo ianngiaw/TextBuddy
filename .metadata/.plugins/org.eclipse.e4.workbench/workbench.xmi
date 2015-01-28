@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_h0Zu8Z-OEeSPgKFA-DLBGA" elementId="org.eclipse.e4.legacy.ide.application" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_h0Zu8p-OEeSPgKFA-DLBGA" bindingContexts="_h0Zu9J-OEeSPgKFA-DLBGA">
-  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;TextBuddy.java&quot; tooltip=&quot;CE1/src/TextBuddy.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/CE1/src/TextBuddy.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
+  <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workbench>&#xD;&#xA;&lt;mruList>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;TextBuddyHelper.java&quot; tooltip=&quot;CE1/src/TextBuddyHelper.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/CE1/src/TextBuddyHelper.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;file factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;TextBuddy.java&quot; tooltip=&quot;CE1/src/TextBuddy.java&quot;>&#xD;&#xA;&lt;persistable path=&quot;/CE1/src/TextBuddy.java&quot;/>&#xD;&#xA;&lt;/file>&#xD;&#xA;&lt;/mruList>&#xD;&#xA;&lt;/workbench>"/>
   <tags>ModelMigrationProcessor.001</tags>
   <tags>activeSchemeId:org.eclipse.ui.defaultAcceleratorConfiguration</tags>
   <children xsi:type="basic:TrimmedWindow" xmi:id="_h0Zu8p-OEeSPgKFA-DLBGA" elementId="IDEWindow" contributorURI="platform:/plugin/org.eclipse.platform" selectedElement="_h_6bYp-OEeSPgKFA-DLBGA" label="%trimmedwindow.label.eclipseSDK" x="0" y="0" width="1024" height="768">
@@ -92,15 +92,14 @@
             <children xsi:type="basic:PartSashContainer" xmi:id="_iJ1MbJ-OEeSPgKFA-DLBGA" containerData="7500" selectedElement="_14x04J_eEeSKv9F8zaKglA" horizontal="true">
               <children xsi:type="basic:PartSashContainer" xmi:id="_14x04J_eEeSKv9F8zaKglA" containerData="7500" selectedElement="_iJ1MbZ-OEeSPgKFA-DLBGA">
                 <children xsi:type="advanced:Placeholder" xmi:id="_iJ1MbZ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.editorss" containerData="6700" ref="_iJl70J-OEeSPgKFA-DLBGA"/>
-                <children xsi:type="basic:PartStack" xmi:id="_iJ1MdZ-OEeSPgKFA-DLBGA" elementId="bottom" toBeRendered="false" containerData="3300">
+                <children xsi:type="basic:PartStack" xmi:id="_iJ1MdZ-OEeSPgKFA-DLBGA" elementId="bottom" containerData="3300" selectedElement="_iJ1Mep-OEeSPgKFA-DLBGA">
                   <tags>newtablook</tags>
                   <tags>org.eclipse.e4.secondaryDataStack</tags>
-                  <tags>MinimizedByZoom</tags>
                   <children xsi:type="advanced:Placeholder" xmi:id="_iJ1Mdp-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.views.ProblemView" toBeRendered="false" ref="_iJspg5-OEeSPgKFA-DLBGA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_iJ1Md5-OEeSPgKFA-DLBGA" elementId="org.eclipse.jdt.ui.JavadocView" toBeRendered="false" ref="_iJtQkJ-OEeSPgKFA-DLBGA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_iJ1MeJ-OEeSPgKFA-DLBGA" elementId="org.eclipse.jdt.ui.SourceView" toBeRendered="false" ref="_iJtQkZ-OEeSPgKFA-DLBGA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_iJ1MeZ-OEeSPgKFA-DLBGA" elementId="org.eclipse.search.ui.views.SearchView" toBeRendered="false" ref="_iJtQkp-OEeSPgKFA-DLBGA"/>
-                  <children xsi:type="advanced:Placeholder" xmi:id="_iJ1Mep-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.console.ConsoleView" toBeRendered="false" ref="_iJtQk5-OEeSPgKFA-DLBGA"/>
+                  <children xsi:type="advanced:Placeholder" xmi:id="_iJ1Mep-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.console.ConsoleView" ref="_iJtQk5-OEeSPgKFA-DLBGA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_iJ1Me5-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.views.BookmarkView" toBeRendered="false" ref="_iJt3oJ-OEeSPgKFA-DLBGA"/>
                   <children xsi:type="advanced:Placeholder" xmi:id="_iJ1MfJ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.views.ProgressView" toBeRendered="false" ref="_iJt3oZ-OEeSPgKFA-DLBGA"/>
                 </children>
@@ -227,7 +226,7 @@
         <tags>EditorStack</tags>
         <tags>active</tags>
         <children xsi:type="basic:Part" xmi:id="_tGZnoJ-OEeSPgKFA-DLBGA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="TextBuddy.java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/obj16/jcu_obj.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;TextBuddy.java&quot; partName=&quot;TextBuddy.java&quot; title=&quot;TextBuddy.java&quot; tooltip=&quot;CE1/src/TextBuddy.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CE1/src/TextBuddy.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1783&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.jdt.ui.CompilationUnitEditor&quot; name=&quot;TextBuddy.java&quot; partName=&quot;TextBuddy.java&quot; title=&quot;TextBuddy.java&quot; tooltip=&quot;CE1/src/TextBuddy.java&quot;>&#xD;&#xA;&lt;input factoryID=&quot;org.eclipse.ui.part.FileEditorInputFactory&quot; path=&quot;/CE1/src/TextBuddy.java&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;3802&quot; selectionTopPixel=&quot;271&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.jdt.ui.CompilationUnitEditor</tags>
           <tags>removeOnHide</tags>
@@ -292,7 +291,7 @@
         <tags>menuContribution:popup</tags>
         <tags>popup:org.eclipse.debug.ui.ProcessConsoleType.#ContextMenu</tags>
       </menus>
-      <toolbar xmi:id="_5bi_YZ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.console.ConsoleView" visible="false"/>
+      <toolbar xmi:id="_5bi_YZ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.console.ConsoleView"/>
     </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_iJt3oJ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.views.BookmarkView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Bookmarks" iconURI="platform:/plugin/org.eclipse.ui.ide/icons/full/eview16/bkmrk_nav.png" closeable="true">
       <tags>View</tags>
@@ -404,7 +403,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_iBQfMJ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_ecFhUKUKEeS_W7otaDqJhw" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_h05eR5-OEeSPgKFA-DLBGA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Us0bN6bBEeSEXMDc-5kEIw" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_h05eR5-OEeSPgKFA-DLBGA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_iBRGQJ-OEeSPgKFA-DLBGA" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -428,7 +427,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_iBRtUJ-OEeSPgKFA-DLBGA" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_ecLA4KUKEeS_W7otaDqJhw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_h04QLJ-OEeSPgKFA-DLBGA"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_Us-MNKbBEeSEXMDc-5kEIw" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_h04QLJ-OEeSPgKFA-DLBGA"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_iBRtUZ-OEeSPgKFA-DLBGA" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

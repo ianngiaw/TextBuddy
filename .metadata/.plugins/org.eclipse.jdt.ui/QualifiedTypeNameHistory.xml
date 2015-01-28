@@ -5,4 +5,6 @@
 <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
 <fullyQualifiedTypeName name="java.io.FileWriter"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="TextBuddyHelper"/>
+<fullyQualifiedTypeName name="TextBuddy"/>
 </qualifiedTypeNameHistroy>
