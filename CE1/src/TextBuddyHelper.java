@@ -276,6 +276,7 @@ public class TextBuddyHelper {
 	 * @throws IOException
 	 */
 	private static void saveLinesToFile (File textFile, List<String> textList) throws IOException {
+		// Used PrintWriter as it more user friendly
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
 		Iterator<String> iterator = textList.iterator();
 		while (iterator.hasNext()) {
