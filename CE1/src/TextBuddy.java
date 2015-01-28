@@ -30,17 +30,32 @@ public class TextBuddy {
 		executeUntilExitCommand(new Scanner(System.in), helper);
 	}
 	
+	/**
+	 * A method that exits the program that if the arguments provided are not valid
+	 * 
+	 * @param args The command line arguments
+	 */
 	private static void exitIfIncorrectArguments (String[] args) {
 		exitIfNoArguments(args);
 		exitIfInvalidFileName(args);
 	}
 	
+	/**
+	 * Exits the program if no command line arguments are provided
+	 * 
+	 * @param args The command line arguments
+	 */
 	private static void exitIfNoArguments (String[] args) {
 		if (args.length == 0) {
 			exitWithErrorMessage(MESSAGE_NO_ARGUMENTS);
 		}
 	}
 	
+	/**
+	 * Exits the program if the file name in the arguments are invalid
+	 * 
+	 * @param args The command line arguments
+	 */
 	private static void exitIfInvalidFileName (String[] args){
 		String fileName = getFileNameFromArguments(args);
 		if (!isValidFileName(fileName)) {
@@ -48,19 +63,40 @@ public class TextBuddy {
 		}
 	}
 	
+	/**
+	 * Exits the program, printing an error message
+	 * 
+	 * @param errorMessage The message to be printed before exiting the program
+	 */
 	public static void exitWithErrorMessage (String errorMessage) {
 		System.out.println(errorMessage);
 		exitProgram();
 	}
 	
+	/**
+	 * Exits the program
+	 */
 	public static void exitProgram () {
 		System.exit(0);
 	}
 
+	/**
+	 * A method that returns the name of the file provided in the command line
+	 * arguments
+	 * 
+	 * @param args The command line arguments
+	 * @return The name of the file given in the command line arguments
+	 */
 	private static String getFileNameFromArguments (String[] args) {
 		return args[0];
 	}
 	
+	/**
+	 * Checks if the string can be used as a valid file name
+	 * 
+	 * @param fileName The name of the file
+	 * @return true if the name is valid, false otherwise
+	 */
 	private static boolean isValidFileName (String fileName) {
 		File file = new File(fileName);
 		try {
@@ -89,6 +125,12 @@ public class TextBuddy {
 		}
 	}
 	
+	/**
+	 * A method that prints a statement requesting input from the user
+	 * 
+	 * @param scanner A scanner object used to get user input
+	 * @return A string of the command entered by the user
+	 */
 	public static String requestUserCommand (Scanner scanner) {
 		System.out.print(MESSAGE_REQUEST_COMMAND);
 		String userCommand = scanner.nextLine();
