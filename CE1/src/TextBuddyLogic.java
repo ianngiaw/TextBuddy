@@ -1,11 +1,4 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,30 +16,24 @@ public class TextBuddyLogic {
 	private static final String MESSAGE_ADD_SUCCESS = "added to %1$s: \"%2$s\"";
 	private static final String MESSAGE_CLEAR_FAILURE = "an error had occurred while trying to clear %1$s";
 	private static final String MESSAGE_CLEAR_SUCCESS = "all content deleted from %1$s";
+	private static final String MESSAGE_DELETE_FAILURE = "failed to delete from %1$s";
 	private static final String MESSAGE_DELETE_SUCCESS = "deleted from %1$s: \"%2$s\"";
+	private static final String MESSAGE_DISPLAY_FAILURE = "failed to display %1$s";
 	private static final String MESSAGE_FILE_EMPTY = "%1$s is empty";
 	private static final String MESSAGE_FILE_INITIALIZATION_ERROR = "Problem in file initialization";
-	private static final String MESSAGE_FILE_READY = "%1$s is ready for use";
 	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
 	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
 	
 	// Format of each line printed in the display command
 	private static final String LINE_FORMAT = "%1$d. %2$s";
 	
-	// Valid commands types a user may input
-	private static final String ADD_COMMAND = "add";
-	private static final String CLEAR_COMMAND = "clear";
-	private static final String DELETE_COMMAND = "delete";
-	private static final String DISPLAY_COMMAND = "display";
-	private static final String EXIT_COMMAND = "exit";
-	
 	// Instance variables
-	private File _textFile;
 	private String _fileName;
+	private TextStorage _textStorage;
 	
 	public TextBuddyLogic (String fileName) {
 		_fileName = fileName;
-		setEnvironment();
+		setupStorage();
 	}
 	
 	/**
@@ -55,24 +42,11 @@ public class TextBuddyLogic {
 	 * @param fileName The name of the file to be edited
 	 * @return A File Object of the provided file name
 	 */
-	private void setEnvironment () {
-		initializeTextFile();
-		printFileReadyMessage(_fileName);
-	}
-
-	/**
-	 * Creates a new java File Object based on the file name provided
-	 * If the file does not exist, it will create a new file with the
-	 * provided name.
-	 * 
-	 * @param fileName The name of the file to be edited
-	 * @return java File Object of the file to be edited
-	 */
-	private void initializeTextFile () {
-		_textFile = new File(_fileName);
-		try {
-			_textFile.createNewFile();
-		} catch (IOException e) {
+	private void setupStorage () {
+		_textStorage = new TextStorage(_fileName);
+		if (_textStorage.isUsable()) {
+			TextBuddy.printFileReady(_fileName);
+		} else {
 			TextBuddy.exitWithErrorMessage(MESSAGE_FILE_INITIALIZATION_ERROR);
 		}
 	}
@@ -85,266 +59,149 @@ public class TextBuddyLogic {
 	 * @param fileName Name of the file to be edited
 	 * @param userCommand Input provided by the user
 	 */
-	public void executeCommand (String userCommand) {
-		String commandType = getFirstWord(userCommand);
-		switch (commandType) {
-			case ADD_COMMAND :
-				executeAddCommand(userCommand);
-				break;
-			case CLEAR_COMMAND :
-				executeClearCommand();
-				break;
-			case DELETE_COMMAND :
-				executeDeleteCommand(userCommand);
-				break;
-			case DISPLAY_COMMAND :
-				executeDisplayCommand();
-				break;
-			case EXIT_COMMAND :
-				TextBuddy.exitProgram();
-				return;
-			default :
-				printInvalidCommand(userCommand);
-				break;
+	public String executeCommand (String userCommand) {
+		Command command = Command.parseCommand(userCommand);
+		final Command.CommandType commandType = command.getCommandType();
+		
+		if (commandType == Command.CommandType.ADD) {
+			return executeAddCommand(command);			
+		} else if (commandType == Command.CommandType.CLEAR) {
+			return executeClearCommand();
+		} else if (commandType == Command.CommandType.DELETE) {
+			return executeDeleteCommand(command);
+		} else if (commandType == Command.CommandType.DISPLAY) {
+			return executeDisplayCommand();
+		} else if (commandType == Command.CommandType.EXIT) {
+			TextBuddy.exitProgram();
+			return null;
+		} else {
+			return responseInvalidCommand(userCommand);
 		}
 	}
 	
-	/**
-	 * Executes the add command, which adds a line to the end
-	 * of the text file
-	 * 
-	 * @param userCommand The full command input by the user
-	 */
-	private void executeAddCommand (String userCommand) {
-		String textToAdd = removeFirstWord(userCommand);
-		addLine(textToAdd);
-	}
-	
-	/**
-	 * Executes the clear command, which clears the entire text file
-	 */
-	private void executeClearCommand () {
+	private String executeAddCommand (Command command) {
+		String line = command.getCommandArgument();
 		try {
-			clearAllFromFile(_textFile);
-			printClearSuccess(_fileName);
+			_textStorage.addLine(line);
 		} catch (IOException e) {
-			printClearFailure(_fileName);
+			return responseAddFailure(line);
 		}
+		return responseAddSuccess(line);
 	}
 	
-	/**
-	 * Executes the delete command, which deletes specified line from
-	 * the text file
-	 * 
-	 * @param userCommand The command input by the user
-	 */
-	private void executeDeleteCommand (String userCommand) {
-		String commandArgument = removeFirstWord(userCommand);
+	private String executeClearCommand () {
 		try {
-			int lineToDelete = Integer.parseInt(commandArgument);
-			deleteLine(lineToDelete);
-		} catch (NumberFormatException e) {
-			printInvalidCommand(userCommand);
+			_textStorage.clearFile();;
+		} catch (IOException e) {
+			return responseClearFailure();
 		}
+		return responseClearSuccess();
+	}
+	
+	private String executeDeleteCommand (Command command) {
+		String commandArgument = command.getCommandArgument();
+		int lineToDelete = -1;
+		try {
+			lineToDelete = Integer.parseInt(commandArgument);
+		} catch (NumberFormatException e) {
+			return responseInvalidCommand(command.getOriginalCommand());
+		}
+		return deleteLine(lineToDelete);
 	}
 
 	/**
 	 * Executes the display command, which displays each line in the
 	 * text file
 	 */
-	private void executeDisplayCommand () {
-		List<String> lines = getLineList(_textFile);
-		displayLines(lines);
-	}
-	
-	/**
-	 * Adds a line to the text file, printing a message if the add
-	 * command was executed successfully and a message if it failed
-	 * 
-	 * @param line The line to be added to the end of the _textFile
-	 */
-	private void addLine (String line) {
+	private String executeDisplayCommand () {
+		List<String> lines;
 		try {
-			addLineToFile(_textFile, line);
-			printAddSuccess(_fileName, line);
+			lines = _textStorage.getLines();
 		} catch (IOException e) {
-			printAddFailure(_fileName, line);
+			return responseDisplayFailure();
 		}
+		return formatLines(lines);
 	}
 
-	/**
-	 * Iterates through a list of strings printing out each string
-	 * beginning with its index number
-	 * 
-	 * @param lineList A list of strings to be printed
-	 */
-	private void displayLines (List<String> lineList) {
+	private String formatLines (List<String> lineList) {
+		String formattedLines = "";
 		Iterator<String> iterator = lineList.iterator();
 		int lineCount = 0;
 		while (iterator.hasNext()) {
-			printLine(++lineCount, iterator.next());
+			formattedLines += formatLine(++lineCount, iterator.next()) + "\n";
 		}
 		if (lineCount == 0) {
-			printFileEmptyMessage(_fileName);
+			return responseFileEmpty();
+		} else {
+			formattedLines = formattedLines.substring(0, formattedLines.length()-1);
 		}
+		return formattedLines;
 	}
 	
-	/**
-	 * Deletes a specified line from _textFile
-	 * 
-	 * @param lineNumber The line to be deleted
-	 */
-	private void deleteLine (int lineNumber) {
-		List<String> lines = getLineList(_textFile);
+	private String deleteLine (int lineNumber) {
+		List<String> lines;
+		try {
+			lines = _textStorage.getLines();
+		} catch (IOException e1) {
+			return responseLineRemoveFailure();
+		}
 		String removedLine;
-		if (isValidLineNumber(lineNumber, lines)) {
+		if (_textStorage.isValidLineNumber(lineNumber, lines)) {
 			removedLine = lines.remove(lineNumber - 1);
 		} else {
-			printLineNumberError(lineNumber);
-			return;
+			return responseLineNumberError(lineNumber);
 		}
 		try {
-			saveLinesToFile(_textFile, lines);
-			printLineRemoveSuccess(_fileName, removedLine);
+			_textStorage.saveLinesToFile(lines);
 		} catch (IOException e) {
-			e.printStackTrace();
+			return responseLineRemoveFailure();
 		}
+		return responseLineRemoveSuccess(removedLine);
+	}
+	
+	// String formatting methods
+	
+	private static String formatLine (int lineNumber, String line) {
+		return String.format(LINE_FORMAT, lineNumber, line);
+	}
+	
+	private String responseAddSuccess (String line) {
+		return String.format(MESSAGE_ADD_SUCCESS, _fileName, line);
 	}
 
-	// Static methods
-	
-	/**
-	 * Adds a string of text to the end of a file
-	 * 
-	 * @param textFile The file to edited
-	 * @param text The string to be added 
-	 * @throws IOException
-	 */
-	private static void addLineToFile (File textFile, String text) throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, true)));
-		out.println(text);
-		out.close();
+	private String responseAddFailure (String line) {
+		return String.format(MESSAGE_ADD_FAILURE, _fileName, line);
 	}
 
-	/**
-	 * Clears an entire file of its contents
-	 * 
-	 * @param textFile The file to be cleared
-	 * @throws IOException
-	 */
-	private static void clearAllFromFile (File textFile) throws IOException {
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
-		out.print("");
-		out.close();
+	private String responseClearSuccess () {
+		return String.format(MESSAGE_CLEAR_SUCCESS, _fileName);
 	}
 	
-	/**
-	 * Takes in an text file and converts each line in the text
-	 * to a string, storing each string in a List Object
-	 * 
-	 * @param textFile File Object where the text is stored
-	 * @return List Object containing each line of the text file
-	 */
-	private static List <String> getLineList (File textFile) {
-		List<String> lines = new ArrayList<String>();
-		String currentLine;
-		BufferedReader bufferedReader;
-		try {
-			bufferedReader = new BufferedReader(new FileReader(textFile));
-			while ((currentLine = bufferedReader.readLine()) != null) {
-				lines.add(currentLine);
-			}
-			bufferedReader.close();
-		} catch (IOException e) {
-			e.printStackTrace();	
-		}
-		return lines;
+	private String responseClearFailure () {
+		return String.format(MESSAGE_CLEAR_FAILURE, _fileName);
 	}
 	
-	private static boolean isValidLineNumber (int lineNumber, List<String> textList) {
-		boolean isLessThanOrEqualToList = lineNumber <= textList.size();
-		boolean isMoreThanZero = lineNumber > 0;
-		return isLessThanOrEqualToList && isMoreThanZero;
+	private String responseDisplayFailure () {
+		return String.format(MESSAGE_DISPLAY_FAILURE, _fileName);
+	}
+	
+	private String responseLineNumberError (int lineNumber) {
+		return String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
 	}
 
-	/**
-	 * Clears the contents of a text file, then saves each string
-	 * in a list of strings as a new line in a text file
-	 * 
-	 * @param textFile The text file to be edited
-	 * @param textList A list of strings to be added to the text file
-	 * @throws IOException
-	 */
-	private static void saveLinesToFile (File textFile, List<String> textList) throws IOException {
-		// Used PrintWriter as it more user friendly
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(textFile, false)));
-		Iterator<String> iterator = textList.iterator();
-		while (iterator.hasNext()) {
-			out.println(iterator.next());
-		}
-		out.close();
+	private String responseLineRemoveSuccess (String removedLine) {
+		return String.format(MESSAGE_DELETE_SUCCESS, _fileName, removedLine);
 	}
 	
-	// Text operations
-	
-	private static String getFirstWord (String userCommand) {
-		String commandType = userCommand.trim().split("\\s+")[0];
-		return commandType;
-	}
-
-	private static String removeFirstWord (String userCommand) {
-		return userCommand.replace(getFirstWord(userCommand), "").trim();
+	private String responseLineRemoveFailure () {
+		return String.format(MESSAGE_DELETE_FAILURE, _fileName);
 	}
 	
-	// Print methods
-	
-	private static void printAddSuccess (String fileName, String text) {
-		String successMessage = String.format(MESSAGE_ADD_SUCCESS, fileName, text);
-		System.out.println(successMessage);
-	}
-
-	private static void printAddFailure (String fileName, String text) {
-		String failureMessage = String.format(MESSAGE_ADD_FAILURE, fileName, text);
-		System.out.println(failureMessage);
-	}
-
-	private static void printClearSuccess (String fileName) {
-		String clearSuccessMessage = String.format(MESSAGE_CLEAR_SUCCESS, fileName);
-		System.out.println(clearSuccessMessage);
+	private String responseFileEmpty () {
+		return String.format(MESSAGE_FILE_EMPTY, _fileName);
 	}
 	
-	private static void printClearFailure (String fileName) {
-		String clearFailureMessage = String.format(MESSAGE_CLEAR_FAILURE, fileName);
-		System.out.println(clearFailureMessage);
-	}
-	
-	private static void printLine (int lineNumber, String line) {
-		String formattedLine = String.format(LINE_FORMAT, lineNumber, line);
-		System.out.println(formattedLine);
-	}
-	
-	private static void printLineNumberError (int lineNumber) {
-		String message = String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
-		System.out.println(message);
-	}
-
-	private static void printLineRemoveSuccess (String fileName, String removedLine) {
-		String successMessage = String.format(MESSAGE_DELETE_SUCCESS, fileName, removedLine);
-		System.out.println(successMessage);
-	}
-	
-	private static void printFileEmptyMessage (String fileName) {
-		String message = String.format(MESSAGE_FILE_EMPTY, fileName);
-		System.out.println(message);
-	}
-	
-	private static void printFileReadyMessage (String fileName){
-		String message = String.format(MESSAGE_FILE_READY, fileName);
-		System.out.println(message);
-	}
-	
-	private static void printInvalidCommand (String userCommand) {
-		String message = String.format(MESSAGE_INVALID_COMMAND, userCommand);
-		System.out.println(message);
+	private static String responseInvalidCommand (String userCommand) {
+		return String.format(MESSAGE_INVALID_COMMAND, userCommand);
 	}
 }

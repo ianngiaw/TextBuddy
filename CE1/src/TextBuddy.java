@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class TextBuddy {
 	
 	// Messages printed
+	private static final String MESSAGE_FILE_READY = "%1$s is ready for use";
 	private static final String MESSAGE_INVALID_FILE_NAME = "invalid file name provided";
 	private static final String MESSAGE_NO_ARGUMENTS = "no file name provided";
 	private static final String MESSAGE_REQUEST_COMMAND = "command: ";
@@ -107,10 +108,6 @@ public class TextBuddy {
 		}
 	}
 	
-	private static void printWelcomeMessage () {
-		System.out.print(MESSAGE_WELCOME);
-	}
-	
 	/**
 	 * A method that runs in an infinite loop requesting for commands
 	 * until the user inputs an exit command.
@@ -121,7 +118,8 @@ public class TextBuddy {
 	private static void executeUntilExitCommand (Scanner scanner, TextBuddyLogic logic) {
 		while (true) {
 			String userCommand = requestUserCommand(scanner);
-			logic.executeCommand(userCommand);
+			String response = logic.executeCommand(userCommand);
+			printResponse(response);
 		}
 	}
 	
@@ -135,5 +133,18 @@ public class TextBuddy {
 		System.out.print(MESSAGE_REQUEST_COMMAND);
 		String userCommand = scanner.nextLine();
 		return userCommand;
+	}
+	
+	private static void printResponse (String response) {
+		System.out.println(response);
+	}
+	
+	private static void printWelcomeMessage () {
+		System.out.print(MESSAGE_WELCOME);
+	}
+	
+	protected static void printFileReady (String fileName) {
+		String message = String.format(MESSAGE_FILE_READY, fileName);
+		System.out.println(message);
 	}
 }
