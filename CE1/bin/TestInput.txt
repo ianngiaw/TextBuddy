@@ -1,13 +1,18 @@
-add this is a line
+add
+    add
+display
+add      this is a line
 add this is another line
-add what?! another line?!
+addwhat?! another line?!
     add tabbed line with 4 spaces at end    
 display
 delete 1
+display
 delete line 1
 delete 2
 display
 add last line
 display
 clear
+display
 exit

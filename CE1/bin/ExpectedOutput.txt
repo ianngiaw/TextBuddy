@@ -1,20 +1,32 @@
 Welcome to TextBuddy. mytextfile.txt is ready for use
+command: added to mytextfile.txt: ""
+command: added to mytextfile.txt: ""
+command: 1. 
+2. 
 command: added to mytextfile.txt: "this is a line"
 command: added to mytextfile.txt: "this is another line"
-command: added to mytextfile.txt: "what?! another line?!"
+command: invalid command format: "addwhat?! another line?!"
 command: added to mytextfile.txt: "tabbed line with 4 spaces at end"
-command: 1. this is a line
-2. this is another line
-3. what?! another line?!
+command: 1. 
+2. 
+3. this is a line
+4. this is another line
+5. tabbed line with 4 spaces at end
+command: deleted from mytextfile.txt: ""
+command: 1. 
+2. this is a line
+3. this is another line
 4. tabbed line with 4 spaces at end
-command: deleted from mytextfile.txt: "this is a line"
 command: invalid command format: "delete line 1"
-command: deleted from mytextfile.txt: "what?! another line?!"
-command: 1. this is another line
-2. tabbed line with 4 spaces at end
+command: deleted from mytextfile.txt: "this is a line"
+command: 1. 
+2. this is another line
+3. tabbed line with 4 spaces at end
 command: added to mytextfile.txt: "last line"
-command: 1. this is another line
-2. tabbed line with 4 spaces at end
-3. last line
+command: 1. 
+2. this is another line
+3. tabbed line with 4 spaces at end
+4. last line
 command: all content deleted from mytextfile.txt
+command: mytextfile.txt is empty
 command: 
