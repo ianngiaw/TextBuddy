@@ -24,7 +24,7 @@ public class TestTBHelper {
 	public void testGetFirstWord() {
 		String result;
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class,
+			result = (String) invokeStaticMethod (TextBuddyLogic.class,
 												"getFirstWord",
 												new Class[]{String.class},
 												new String[]{"first word"});
@@ -34,7 +34,7 @@ public class TestTBHelper {
 		assertEquals("first", result);
 		
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class,
+			result = (String) invokeStaticMethod (TextBuddyLogic.class,
 												"getFirstWord",
 												new Class[]{String.class},
 												new String[]{"    first"});
@@ -44,7 +44,7 @@ public class TestTBHelper {
 		assertEquals("first", result);
 		
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class,
+			result = (String) invokeStaticMethod (TextBuddyLogic.class,
 												"getFirstWord",
 												new Class[]{String.class},
 												new String[]{""});
@@ -54,7 +54,7 @@ public class TestTBHelper {
 		assertEquals("", result);
 		
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class,
+			result = (String) invokeStaticMethod (TextBuddyLogic.class,
 												"getFirstWord",
 												new Class[]{String.class},
 												new String[]{"first    "});
@@ -68,7 +68,7 @@ public class TestTBHelper {
 	public void testRemoveFirstWord() {
 		String result;
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class, "removeFirstWord",
+			result = (String) invokeStaticMethod (TextBuddyLogic.class, "removeFirstWord",
 												  new Class[]{String.class},
 												  new String[]{"first word"});
 			
@@ -78,7 +78,7 @@ public class TestTBHelper {
 		assertEquals("word", result);
 		
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class, "removeFirstWord",
+			result = (String) invokeStaticMethod (TextBuddyLogic.class, "removeFirstWord",
 												  new Class[]{String.class},
 												  new String[]{"word"});
 			
@@ -88,7 +88,7 @@ public class TestTBHelper {
 		assertEquals("", result);
 	
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class, "removeFirstWord",
+			result = (String) invokeStaticMethod (TextBuddyLogic.class, "removeFirstWord",
 												  new Class[]{String.class},
 												  new String[]{"     word"});
 			
@@ -98,7 +98,7 @@ public class TestTBHelper {
 		assertEquals("", result);
 		
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class, "removeFirstWord",
+			result = (String) invokeStaticMethod (TextBuddyLogic.class, "removeFirstWord",
 												  new Class[]{String.class},
 												  new String[]{"    "});
 			
@@ -108,7 +108,7 @@ public class TestTBHelper {
 		assertEquals("", result);
 		
 		try {
-			result = (String) invokeStaticMethod (TextBuddyHelper.class, "removeFirstWord",
+			result = (String) invokeStaticMethod (TextBuddyLogic.class, "removeFirstWord",
 												  new Class[]{String.class},
 												  new String[]{"a very very long string"});
 			

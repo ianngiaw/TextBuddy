@@ -16,7 +16,7 @@ import java.util.List;
  * @author Ngiaw Ting An, Ian
  *
  */
-public class TextBuddyHelper {
+public class TextBuddyLogic {
 	
 	// Messages printed
 	private static final String MESSAGE_ADD_FAILURE = "failed adding \"%2$s\" to %1$s";
@@ -44,7 +44,7 @@ public class TextBuddyHelper {
 	private File _textFile;
 	private String _fileName;
 	
-	public TextBuddyHelper (String fileName) {
+	public TextBuddyLogic (String fileName) {
 		_fileName = fileName;
 		setEnvironment();
 	}

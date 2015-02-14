@@ -26,8 +26,8 @@ public class TextBuddy {
 		printWelcomeMessage();
 		exitIfIncorrectArguments(args);
 		String fileName = getFileNameFromArguments(args);
-		TextBuddyHelper helper = new TextBuddyHelper(fileName);
-		executeUntilExitCommand(new Scanner(System.in), helper);
+		TextBuddyLogic logic = new TextBuddyLogic(fileName);
+		executeUntilExitCommand(new Scanner(System.in), logic);
 	}
 	
 	/**
@@ -118,10 +118,10 @@ public class TextBuddy {
 	 * @param textFile The file to be edited
 	 * @param fileName The name of the file to be edited
 	 */
-	private static void executeUntilExitCommand (Scanner scanner, TextBuddyHelper helper) {
+	private static void executeUntilExitCommand (Scanner scanner, TextBuddyLogic logic) {
 		while (true) {
 			String userCommand = requestUserCommand(scanner);
-			helper.executeCommand(userCommand);
+			logic.executeCommand(userCommand);
 		}
 	}
 	
