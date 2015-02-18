@@ -7,6 +7,8 @@ public class TestTBLogic {
 	
 	@Test
 	public void testExecuteSearchCommand () {
+		logic.executeCommand("clear");
+		
 		logic.executeCommand("add line1");
 		logic.executeCommand("add line2");
 		logic.executeCommand("add line3");
@@ -14,11 +16,22 @@ public class TestTBLogic {
 		String searchBlankResponse = logic.executeCommand("search");
 		assertEquals("no search terms", searchBlankResponse);
 		
+		String searchNoMatchResponse = logic.executeCommand("search z");
+		assertEquals("no match found for \"z\" in mytextfile.txt", searchNoMatchResponse);
+		
+		String searchLineResponse = logic.executeCommand("search line");
+		assertEquals("1. line1\n2. line2\n3. line3", searchLineResponse);
+
+		String search2Response = logic.executeCommand("search 2");
+		assertEquals("2. line2", search2Response);
+		
 		logic.executeCommand("clear");
 	}
 	
 	@Test
 	public void testExecuteCommand () {
+		logic.executeCommand("clear");
+		
 		String add1Response = logic.executeCommand("add line1");
 		assertEquals("added to mytextfile.txt: \"line1\"", add1Response);
 		

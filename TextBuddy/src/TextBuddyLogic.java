@@ -24,6 +24,8 @@ public class TextBuddyLogic {
 	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
 	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
 	private static final String MESSAGE_SEARCH_NO_TERMS = "no search terms";
+	private static final String MESSAGE_SEARCH_NO_MATCH = "no match found for \"%1$s\" in %2$s";
+	private static final String MESSAGE_SEARCH_FAILURE = "search failed";
 	
 	// Format of each line printed in the display command
 	private static final String LINE_FORMAT = "%1$d. %2$s";
@@ -81,13 +83,6 @@ public class TextBuddyLogic {
 			return responseInvalidCommand(userCommand);
 		}
 	}
-	
-	private String executeSearchCommand(Command command) {
-		if (command.getCommandArgument().equals("")) {
-			return MESSAGE_SEARCH_NO_TERMS;
-		}
-		return null;
-	}
 
 	private String executeAddCommand (Command command) {
 		String line = command.getCommandArgument();
@@ -130,12 +125,25 @@ public class TextBuddyLogic {
 		} catch (IOException e) {
 			return responseDisplayFailure();
 		}
-		return formatLines(lines);
+		return formatDisplayLines(lines);
 	}
 
-	private String formatLines (List<String> lineList) {
+	private String executeSearchCommand(Command command) {
+		if (command.getCommandArgument().equals("")) {
+			return MESSAGE_SEARCH_NO_TERMS;
+		}
+		List<String> lines;
+		try {
+			lines = _textStorage.getLines();
+		} catch (IOException e) {
+			return MESSAGE_SEARCH_FAILURE;
+		}
+		return extractSearchResults(lines, command.getCommandArgument());
+	}
+
+	private String formatDisplayLines (List<String> lines) {
 		String formattedLines = "";
-		Iterator<String> iterator = lineList.iterator();
+		Iterator<String> iterator = lines.iterator();
 		int lineCount = 0;
 		while (iterator.hasNext()) {
 			formattedLines += formatLine(++lineCount, iterator.next()) + "\n";
@@ -146,6 +154,23 @@ public class TextBuddyLogic {
 			formattedLines = formattedLines.substring(0, formattedLines.length()-1);
 		}
 		return formattedLines;
+	}
+
+	private String extractSearchResults(List<String> lines, String searchTerm) {
+		String searchResults = "";
+		Iterator<String> iterator = lines.iterator();
+		int lineCount = 1;
+		while (iterator.hasNext()) {
+			String line = iterator.next();
+			if (line.contains(searchTerm)) {
+				searchResults += formatLine(lineCount, line) + "\n";
+			}
+			lineCount++;
+		}
+		if (searchResults.equals("")) {
+			return responseSearchNoMatch(searchTerm);
+		}
+		return searchResults.substring(0, searchResults.length()-1);
 	}
 	
 	private String deleteLine (int lineNumber) {
@@ -209,6 +234,10 @@ public class TextBuddyLogic {
 	
 	private String responseFileEmpty () {
 		return String.format(MESSAGE_FILE_EMPTY, _fileName);
+	}
+	
+	private String responseSearchNoMatch (String searchTerm) {
+		return String.format(MESSAGE_SEARCH_NO_MATCH, searchTerm, _fileName);
 	}
 	
 	private static String responseInvalidCommand (String userCommand) {
