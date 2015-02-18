@@ -9,6 +9,8 @@ public class Command {
 	private static final String DELETE_COMMAND = "delete";
 	private static final String DISPLAY_COMMAND = "display";
 	private static final String EXIT_COMMAND = "exit";
+	private static final String SEARCH_COMMAND = "search";
+	private static final String SORT_COMMAND = "sort";
 	
 	protected static enum CommandType {
 		ADD,
@@ -16,6 +18,8 @@ public class Command {
 		DELETE,
 		DISPLAY,
 		EXIT,
+		SEARCH,
+		SORT,
 		INVALID
 	};
 	
@@ -56,6 +60,10 @@ public class Command {
 				return CommandType.DISPLAY;
 			case EXIT_COMMAND :
 				return CommandType.EXIT;
+			case SEARCH_COMMAND :
+				return CommandType.SEARCH;
+			case SORT_COMMAND :
+				return CommandType.SORT;
 			default:
 				return CommandType.INVALID;
 		}
