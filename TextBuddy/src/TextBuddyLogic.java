@@ -26,6 +26,8 @@ public class TextBuddyLogic {
 	private static final String MESSAGE_SEARCH_NO_TERMS = "no search terms";
 	private static final String MESSAGE_SEARCH_NO_MATCH = "no match found for \"%1$s\" in %2$s";
 	private static final String MESSAGE_SEARCH_FAILURE = "search failed";
+	private static final String MESSAGE_SORT_FAILURE = "sort failed";
+	private static final String MESSAGE_SORT_SUCCESS = "%1$s has been sorted alphabetically";
 	
 	// Format of each line printed in the display command
 	private static final String LINE_FORMAT = "%1$d. %2$s";
@@ -79,8 +81,10 @@ public class TextBuddyLogic {
 			return null;
 		} else if (commandType == Command.CommandType.SEARCH) {
 			return executeSearchCommand(command);
+		} else if (commandType == Command.CommandType.SORT) {
+			return executeSortCommand();
 		} else {
-			return responseInvalidCommand(userCommand);
+			return formatResponseInvalidCommand(userCommand);
 		}
 	}
 
@@ -89,18 +93,18 @@ public class TextBuddyLogic {
 		try {
 			_textStorage.addLine(line);
 		} catch (IOException e) {
-			return responseAddFailure(line);
+			return formatResponseAddFailure(line);
 		}
-		return responseAddSuccess(line);
+		return formatResponseAddSuccess(line);
 	}
 	
 	private String executeClearCommand () {
 		try {
 			_textStorage.clearFile();;
 		} catch (IOException e) {
-			return responseClearFailure();
+			return formatResponseClearFailure();
 		}
-		return responseClearSuccess();
+		return formatResponseClearSuccess();
 	}
 	
 	private String executeDeleteCommand (Command command) {
@@ -109,7 +113,7 @@ public class TextBuddyLogic {
 		try {
 			lineToDelete = Integer.parseInt(commandArgument);
 		} catch (NumberFormatException e) {
-			return responseInvalidCommand(command.getOriginalCommand());
+			return formatResponseInvalidCommand(command.getOriginalCommand());
 		}
 		return deleteLine(lineToDelete);
 	}
@@ -123,7 +127,7 @@ public class TextBuddyLogic {
 		try {
 			lines = _textStorage.getLines();
 		} catch (IOException e) {
-			return responseDisplayFailure();
+			return formatResponseDisplayFailure();
 		}
 		return formatDisplayLines(lines);
 	}
@@ -141,6 +145,25 @@ public class TextBuddyLogic {
 		return extractSearchResults(lines, command.getCommandArgument());
 	}
 
+	private String executeSortCommand() {
+		List<String> lines;
+		try {
+			lines = _textStorage.getLines();
+		} catch (IOException e) {
+			return MESSAGE_SORT_FAILURE;
+		}
+		if (lines.isEmpty()) {
+			return formatResponseFileEmpty();
+		}
+		lines.sort(null);
+		try {
+			_textStorage.saveLinesToFile(lines);
+		} catch (IOException e) {
+			return MESSAGE_SORT_FAILURE;
+		}
+		return formatResponseSortSuccess();
+	}
+
 	private String formatDisplayLines (List<String> lines) {
 		String formattedLines = "";
 		Iterator<String> iterator = lines.iterator();
@@ -149,7 +172,7 @@ public class TextBuddyLogic {
 			formattedLines += formatLine(++lineCount, iterator.next()) + "\n";
 		}
 		if (lineCount == 0) {
-			return responseFileEmpty();
+			return formatResponseFileEmpty();
 		} else {
 			formattedLines = formattedLines.substring(0, formattedLines.length()-1);
 		}
@@ -168,7 +191,7 @@ public class TextBuddyLogic {
 			lineCount++;
 		}
 		if (searchResults.equals("")) {
-			return responseSearchNoMatch(searchTerm);
+			return formatResponseSearchNoMatch(searchTerm);
 		}
 		return searchResults.substring(0, searchResults.length()-1);
 	}
@@ -178,20 +201,20 @@ public class TextBuddyLogic {
 		try {
 			lines = _textStorage.getLines();
 		} catch (IOException e1) {
-			return responseLineRemoveFailure();
+			return formatResponseLineRemoveFailure();
 		}
 		String removedLine;
 		if (_textStorage.isValidLineNumber(lineNumber, lines)) {
 			removedLine = lines.remove(lineNumber - 1);
 		} else {
-			return responseLineNumberError(lineNumber);
+			return formatResponseLineNumberError(lineNumber);
 		}
 		try {
 			_textStorage.saveLinesToFile(lines);
 		} catch (IOException e) {
-			return responseLineRemoveFailure();
+			return formatResponseLineRemoveFailure();
 		}
-		return responseLineRemoveSuccess(removedLine);
+		return formatResponseLineRemoveSuccess(removedLine);
 	}
 	
 	// String formatting methods
@@ -200,47 +223,51 @@ public class TextBuddyLogic {
 		return String.format(LINE_FORMAT, lineNumber, line);
 	}
 	
-	private String responseAddSuccess (String line) {
+	private String formatResponseAddSuccess (String line) {
 		return String.format(MESSAGE_ADD_SUCCESS, _fileName, line);
 	}
 
-	private String responseAddFailure (String line) {
+	private String formatResponseAddFailure (String line) {
 		return String.format(MESSAGE_ADD_FAILURE, _fileName, line);
 	}
 
-	private String responseClearSuccess () {
+	private String formatResponseClearSuccess () {
 		return String.format(MESSAGE_CLEAR_SUCCESS, _fileName);
 	}
 	
-	private String responseClearFailure () {
+	private String formatResponseClearFailure () {
 		return String.format(MESSAGE_CLEAR_FAILURE, _fileName);
 	}
 	
-	private String responseDisplayFailure () {
+	private String formatResponseDisplayFailure () {
 		return String.format(MESSAGE_DISPLAY_FAILURE, _fileName);
 	}
 	
-	private String responseLineNumberError (int lineNumber) {
+	private String formatResponseLineNumberError (int lineNumber) {
 		return String.format(MESSAGE_LINE_NUMBER_ERROR, lineNumber);
 	}
 
-	private String responseLineRemoveSuccess (String removedLine) {
+	private String formatResponseLineRemoveSuccess (String removedLine) {
 		return String.format(MESSAGE_DELETE_SUCCESS, _fileName, removedLine);
 	}
 	
-	private String responseLineRemoveFailure () {
+	private String formatResponseLineRemoveFailure () {
 		return String.format(MESSAGE_DELETE_FAILURE, _fileName);
 	}
 	
-	private String responseFileEmpty () {
+	private String formatResponseFileEmpty () {
 		return String.format(MESSAGE_FILE_EMPTY, _fileName);
 	}
 	
-	private String responseSearchNoMatch (String searchTerm) {
+	private String formatResponseSearchNoMatch (String searchTerm) {
 		return String.format(MESSAGE_SEARCH_NO_MATCH, searchTerm, _fileName);
 	}
 	
-	private static String responseInvalidCommand (String userCommand) {
+	private String formatResponseSortSuccess () {
+		return String.format(MESSAGE_SORT_SUCCESS, _fileName);
+	}
+	
+	private static String formatResponseInvalidCommand (String userCommand) {
 		return String.format(MESSAGE_INVALID_COMMAND, userCommand);
 	}
 }

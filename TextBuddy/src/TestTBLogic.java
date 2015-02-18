@@ -29,6 +29,28 @@ public class TestTBLogic {
 	}
 	
 	@Test
+	public void testExecuteSortCommand () {
+		logic.executeCommand("clear");
+		
+		String sortEmptyResponse = logic.executeCommand("sort");
+		assertEquals("mytextfile.txt is empty", sortEmptyResponse);
+		
+		logic.executeCommand("add d");
+		logic.executeCommand("add c");
+		logic.executeCommand("add b");
+		logic.executeCommand("add a");
+		logic.executeCommand("add ab");
+		logic.executeCommand("add aa");
+		logic.executeCommand("add ad");
+		logic.executeCommand("add ac");
+		
+		String sortResponse = logic.executeCommand("sort");
+		assertEquals("mytextfile.txt has been sorted alphabetically", sortResponse);
+		
+		logic.executeCommand("clear");
+	}
+	
+	@Test
 	public void testExecuteCommand () {
 		logic.executeCommand("clear");
 		
