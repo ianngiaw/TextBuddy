@@ -40,4 +40,16 @@ public class TestTBLogic {
 		String exitResponse = logic.executeCommand("exit");
 		assertEquals(null, exitResponse);
 	}
+	
+	@Test
+	public void testExecuteSearchCommand () {
+		logic.executeCommand("add line1");
+		logic.executeCommand("add line2");
+		logic.executeCommand("add line3");
+		
+		String searchBlankResponse = logic.executeCommand("search");
+		assertEquals("no search terms", searchBlankResponse);
+		
+		logic.executeCommand("exit");
+	}
 }

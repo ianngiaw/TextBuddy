@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class TextBuddyLogic {
 	
-	// Messages printed
+	// Unformatted messages returned
 	private static final String MESSAGE_ADD_FAILURE = "failed adding \"%2$s\" to %1$s";
 	private static final String MESSAGE_ADD_SUCCESS = "added to %1$s: \"%2$s\"";
 	private static final String MESSAGE_CLEAR_FAILURE = "an error had occurred while trying to clear %1$s";
@@ -23,6 +23,7 @@ public class TextBuddyLogic {
 	private static final String MESSAGE_FILE_INITIALIZATION_ERROR = "Problem in file initialization";
 	private static final String MESSAGE_INVALID_COMMAND = "invalid command format: \"%1$s\"";
 	private static final String MESSAGE_LINE_NUMBER_ERROR = "Line %1$d does not exist";
+	private static final String MESSAGE_SEARCH_NO_TERMS = "no search terms";
 	
 	// Format of each line printed in the display command
 	private static final String LINE_FORMAT = "%1$d. %2$s";
@@ -33,7 +34,7 @@ public class TextBuddyLogic {
 	
 	public TextBuddyLogic (String fileName) {
 		_fileName = fileName;
-		setupStorage();
+		setUpStorage();
 	}
 	
 	/**
@@ -42,7 +43,7 @@ public class TextBuddyLogic {
 	 * @param fileName The name of the file to be edited
 	 * @return A File Object of the provided file name
 	 */
-	private void setupStorage () {
+	private void setUpStorage () {
 		_textStorage = new TextStorage(_fileName);
 		if (_textStorage.isUsable()) {
 			TextBuddy.printFileReady(_fileName);
@@ -74,11 +75,20 @@ public class TextBuddyLogic {
 		} else if (commandType == Command.CommandType.EXIT) {
 			TextBuddy.exitProgram();
 			return null;
+		} else if (commandType == Command.CommandType.SEARCH) {
+			return executeSearchCommand(command);
 		} else {
 			return responseInvalidCommand(userCommand);
 		}
 	}
 	
+	private String executeSearchCommand(Command command) {
+		if (command.getCommandArgument().equals("")) {
+			return MESSAGE_SEARCH_NO_TERMS;
+		}
+		return null;
+	}
+
 	private String executeAddCommand (Command command) {
 		String line = command.getCommandArgument();
 		try {
