@@ -6,6 +6,18 @@ public class TestTBLogic {
 	TextBuddyLogic logic = new TextBuddyLogic("mytextfile.txt");
 	
 	@Test
+	public void testExecuteSearchCommand () {
+		logic.executeCommand("add line1");
+		logic.executeCommand("add line2");
+		logic.executeCommand("add line3");
+		
+		String searchBlankResponse = logic.executeCommand("search");
+		assertEquals("no search terms", searchBlankResponse);
+		
+		logic.executeCommand("clear");
+	}
+	
+	@Test
 	public void testExecuteCommand () {
 		String add1Response = logic.executeCommand("add line1");
 		assertEquals("added to mytextfile.txt: \"line1\"", add1Response);
@@ -36,20 +48,5 @@ public class TestTBLogic {
 
 		String clear1Response = logic.executeCommand("clear 1");
 		assertEquals("all content deleted from mytextfile.txt", clear1Response);
-		
-		String exitResponse = logic.executeCommand("exit");
-		assertEquals(null, exitResponse);
-	}
-	
-	@Test
-	public void testExecuteSearchCommand () {
-		logic.executeCommand("add line1");
-		logic.executeCommand("add line2");
-		logic.executeCommand("add line3");
-		
-		String searchBlankResponse = logic.executeCommand("search");
-		assertEquals("no search terms", searchBlankResponse);
-		
-		logic.executeCommand("exit");
 	}
 }
