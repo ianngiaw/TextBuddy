@@ -27,6 +27,11 @@ public class TextStorage {
 		return _isUsable;
 	}
 	
+	/**
+	 * Adds a line of text provided to the end of a text file.
+	 * @param line The text to be added to the end of the file. Must not be null.
+	 * @throws IOException Will be thrown if an I/O Error occurred
+	 */
 	public void addLine (String line) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_textFile, true)));
 		out.println(line);
