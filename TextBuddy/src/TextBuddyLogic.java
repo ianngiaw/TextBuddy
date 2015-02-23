@@ -129,15 +129,18 @@ public class TextBuddyLogic {
 		} catch (IOException e) {
 			return MESSAGE_SORT_FAILURE;
 		}
+		
 		if (lines.isEmpty()) {
 			return formatResponseFileEmpty();
 		}
+		
 		lines.sort(null);
 		try {
 			_textStorage.saveLinesToFile(lines);
 		} catch (IOException e) {
 			return MESSAGE_SORT_FAILURE;
 		}
+		
 		return formatResponseSortSuccess();
 	}
 
