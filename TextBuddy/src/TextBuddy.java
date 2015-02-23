@@ -24,7 +24,7 @@ public class TextBuddy {
 	 * @param args Command line argument which gives the name of the text file to be edited
 	 */
 	public static void main (String[] args) {
-		printWelcomeMessage();
+		printWelcome();
 		exitIfIncorrectArguments(args);
 		String fileName = getFileNameFromArguments(args);
 		TextBuddyLogic logic = new TextBuddyLogic(fileName);
@@ -74,9 +74,6 @@ public class TextBuddy {
 		exitProgram();
 	}
 	
-	/**
-	 * Exits the program
-	 */
 	public static void exitProgram () {
 		System.exit(0);
 	}
@@ -93,7 +90,7 @@ public class TextBuddy {
 	}
 	
 	/**
-	 * Checks if the string can be used as a valid file name
+	 * Checks if a string can be used as a valid file name
 	 * 
 	 * @param fileName The name of the file
 	 * @return true if the name is valid, false otherwise
@@ -139,7 +136,7 @@ public class TextBuddy {
 		System.out.println(response);
 	}
 	
-	private static void printWelcomeMessage () {
+	private static void printWelcome () {
 		System.out.print(MESSAGE_WELCOME);
 	}
 	
