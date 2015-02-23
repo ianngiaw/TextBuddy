@@ -2,13 +2,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * This is a helper class for the TextBuddy class which is
- * created by the main method of the TextBuddy class
- * 
- * @author Ngiaw Ting An, Ian
- *
- */
 public class TextBuddyLogic {
 	
 	// Unformatted messages returned
@@ -41,12 +34,6 @@ public class TextBuddyLogic {
 		setUpStorage();
 	}
 	
-	/**
-	 * Prepares the text file to be edited. To be called only by constructor.
-	 * 
-	 * @param fileName The name of the file to be edited
-	 * @return A File Object of the provided file name
-	 */
 	private void setUpStorage () {
 		_textStorage = new TextStorage(_fileName);
 		if (_textStorage.isUsable()) {
@@ -56,14 +43,6 @@ public class TextBuddyLogic {
 		}
 	}
 	
-	/**
-	 * This method chooses the appropriate actions to carry out based on
-	 * the user's input command(s)
-	 * 
-	 * @param textFile File Object of the text file to be edited
-	 * @param fileName Name of the file to be edited
-	 * @param userCommand Input provided by the user
-	 */
 	public String executeCommand (String userCommand) {
 		Command command = Command.parseCommand(userCommand);
 		final Command.CommandType commandType = command.getCommandType();
@@ -118,10 +97,6 @@ public class TextBuddyLogic {
 		return deleteLine(lineToDelete);
 	}
 
-	/**
-	 * Executes the display command, which displays each line in the
-	 * text file
-	 */
 	private String executeDisplayCommand () {
 		List<String> lines;
 		try {
