@@ -66,6 +66,8 @@ public class TextBuddyLogic {
 			return formatResponseInvalidCommand(userCommand);
 		}
 	}
+	
+	// Execution methods for each specified command
 
 	private String executeAddCommand (Command command) {
 		String line = command.getCommandArgument();
@@ -117,7 +119,7 @@ public class TextBuddyLogic {
 		} catch (IOException e) {
 			return MESSAGE_SEARCH_FAILURE;
 		}
-		return extractSearchResults(lines, command.getCommandArgument());
+		return formatSearchResults(lines, command.getCommandArgument());
 	}
 
 	private String executeSortCommand() {
@@ -142,21 +144,25 @@ public class TextBuddyLogic {
 	private String formatDisplayLines (List<String> lines) {
 		String formattedLines = "";
 		Iterator<String> iterator = lines.iterator();
+		
 		int lineCount = 0;
 		while (iterator.hasNext()) {
 			formattedLines += formatLine(++lineCount, iterator.next()) + "\n";
 		}
+		
 		if (lineCount == 0) {
 			return formatResponseFileEmpty();
 		} else {
 			formattedLines = formattedLines.substring(0, formattedLines.length()-1);
 		}
+		
 		return formattedLines;
 	}
 
-	private String extractSearchResults(List<String> lines, String searchTerm) {
+	private String formatSearchResults (List<String> lines, String searchTerm) {
 		String searchResults = "";
 		Iterator<String> iterator = lines.iterator();
+		
 		int lineCount = 1;
 		while (iterator.hasNext()) {
 			String line = iterator.next();
@@ -165,30 +171,36 @@ public class TextBuddyLogic {
 			}
 			lineCount++;
 		}
+		
 		if (searchResults.equals("")) {
 			return formatResponseSearchNoMatch(searchTerm);
 		}
+		
 		return searchResults.substring(0, searchResults.length()-1);
 	}
 	
 	private String deleteLine (int lineNumber) {
 		List<String> lines;
+		
 		try {
 			lines = _textStorage.getLines();
 		} catch (IOException e1) {
 			return formatResponseLineRemoveFailure();
 		}
+		
 		String removedLine;
 		if (_textStorage.isValidLineNumber(lineNumber, lines)) {
 			removedLine = lines.remove(lineNumber - 1);
 		} else {
 			return formatResponseLineNumberError(lineNumber);
 		}
+		
 		try {
 			_textStorage.saveLinesToFile(lines);
 		} catch (IOException e) {
 			return formatResponseLineRemoveFailure();
 		}
+		
 		return formatResponseLineRemoveSuccess(removedLine);
 	}
 	
