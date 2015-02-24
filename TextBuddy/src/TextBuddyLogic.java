@@ -4,7 +4,8 @@ import java.util.List;
 
 public class TextBuddyLogic {
 	
-	// Unformatted messages returned
+	// Unformatted response messages returned
+	
 	private static final String MESSAGE_ADD_FAILURE = "failed adding \"%2$s\" to %1$s";
 	private static final String MESSAGE_ADD_SUCCESS = "added to %1$s: \"%2$s\"";
 	private static final String MESSAGE_CLEAR_FAILURE = "an error had occurred while trying to clear %1$s";
@@ -22,10 +23,12 @@ public class TextBuddyLogic {
 	private static final String MESSAGE_SORT_FAILURE = "sort failed";
 	private static final String MESSAGE_SORT_SUCCESS = "%1$s has been sorted alphabetically";
 	
-	// Format of each line printed in the display command
+	// Format of each line printed in the display or search command
+	
 	private static final String LINE_FORMAT = "%1$d. %2$s";
 	
 	// Instance variables
+	
 	private String _fileName;
 	private TextStorage _textStorage;
 	
@@ -110,6 +113,7 @@ public class TextBuddyLogic {
 	}
 
 	private String executeSearchCommand(Command command) {
+		// Response if no search terms are given
 		if (command.getCommandArgument().equals("")) {
 			return MESSAGE_SEARCH_NO_TERMS;
 		}
@@ -130,6 +134,7 @@ public class TextBuddyLogic {
 			return MESSAGE_SORT_FAILURE;
 		}
 		
+		// Response if there is nothing to sort
 		if (lines.isEmpty()) {
 			return formatResponseFileEmpty();
 		}
@@ -142,6 +147,30 @@ public class TextBuddyLogic {
 		}
 		
 		return formatResponseSortSuccess();
+	}
+	
+	private String deleteLine (int lineNumber) {
+		List<String> lines;
+		try {
+			lines = _textStorage.getLines();
+		} catch (IOException e1) {
+			return formatResponseLineRemoveFailure();
+		}
+		
+		String removedLine;
+		if (_textStorage.isValidLineNumber(lineNumber, lines)) {
+			removedLine = lines.remove(lineNumber - 1);
+		} else {
+			return formatResponseLineNumberError(lineNumber);
+		}
+		
+		try {
+			_textStorage.saveLinesToFile(lines);
+		} catch (IOException e) {
+			return formatResponseLineRemoveFailure();
+		}
+		
+		return formatResponseLineRemoveSuccess(removedLine);
 	}
 
 	private String formatDisplayLines (List<String> lines) {
@@ -180,31 +209,6 @@ public class TextBuddyLogic {
 		}
 		
 		return searchResults.substring(0, searchResults.length()-1);
-	}
-	
-	private String deleteLine (int lineNumber) {
-		List<String> lines;
-		
-		try {
-			lines = _textStorage.getLines();
-		} catch (IOException e1) {
-			return formatResponseLineRemoveFailure();
-		}
-		
-		String removedLine;
-		if (_textStorage.isValidLineNumber(lineNumber, lines)) {
-			removedLine = lines.remove(lineNumber - 1);
-		} else {
-			return formatResponseLineNumberError(lineNumber);
-		}
-		
-		try {
-			_textStorage.saveLinesToFile(lines);
-		} catch (IOException e) {
-			return formatResponseLineRemoveFailure();
-		}
-		
-		return formatResponseLineRemoveSuccess(removedLine);
 	}
 	
 	// String formatting methods
