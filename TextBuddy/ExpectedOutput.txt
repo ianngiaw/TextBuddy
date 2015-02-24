@@ -1,0 +1,49 @@
+Welcome to TextBuddy. mytextfile.txt is ready for use
+command: added to mytextfile.txt: "line 1"
+command: 1. line 1
+command: added to mytextfile.txt: ""
+command: added to mytextfile.txt: "line 2"
+command: added to mytextfile.txt: "line 3"
+command: added to mytextfile.txt: "line 4"
+command: 1. line 1
+2. 
+3. line 2
+4. line 3
+5. line 4
+command: invalid command format: "delete line 1"
+command: deleted from mytextfile.txt: "line 2"
+command: 1. line 1
+2. 
+3. line 3
+4. line 4
+command: no search terms
+command: 3. line 3
+command: 1. line 1
+3. line 3
+4. line 4
+command: no match found for "2" in mytextfile.txt
+command: no match found for "222222" in mytextfile.txt
+command: Line 6 does not exist
+command: Line -1 does not exist
+command: invalid command format: "delete potato"
+command: all content deleted from mytextfile.txt
+command: mytextfile.txt is empty
+command: added to mytextfile.txt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+command: added to mytextfile.txt: "Sed ultricies dignissim sagittis."
+command: added to mytextfile.txt: "Morbi quis leo et felis fringilla fermentum."
+command: added to mytextfile.txt: "Mauris vel erat ex."
+command: added to mytextfile.txt: "Donec nisi purus, rhoncus sed rutrum ac, mollis eget ante."
+command: 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+2. Sed ultricies dignissim sagittis.
+3. Morbi quis leo et felis fringilla fermentum.
+4. Mauris vel erat ex.
+5. Donec nisi purus, rhoncus sed rutrum ac, mollis eget ante.
+command: mytextfile.txt has been sorted alphabetically
+command: 1. Donec nisi purus, rhoncus sed rutrum ac, mollis eget ante.
+2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+3. Mauris vel erat ex.
+4. Morbi quis leo et felis fringilla fermentum.
+5. Sed ultricies dignissim sagittis.
+command: all content deleted from mytextfile.txt
+command: mytextfile.txt is empty
+command: 

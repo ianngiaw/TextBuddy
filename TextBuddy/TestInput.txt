@@ -1,0 +1,31 @@
+    add line 1     
+display
+add     
+add line 2     
+add        line 3
+add line 4
+     display
+delete line 1
+delete 3
+display
+search      
+search line 3
+search line
+search 2
+search 222222
+delete 6
+delete -1
+delete potato
+clear
+display
+add Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+add Sed ultricies dignissim sagittis.
+add Morbi quis leo et felis fringilla fermentum.
+add Mauris vel erat ex.
+add Donec nisi purus, rhoncus sed rutrum ac, mollis eget ante.
+display
+sort
+display
+clear
+display
+exit
