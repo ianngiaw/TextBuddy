@@ -44,6 +44,7 @@ public class TextStorage {
 	 */
 	public void clearFile () throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_textFile, false)));
+		// Print an empty string so as to ensure all contents of the file is deleted
 		out.print("");
 		out.close();
 	}
