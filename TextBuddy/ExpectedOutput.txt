@@ -46,4 +46,5 @@ command: 1. Donec nisi purus, rhoncus sed rutrum ac, mollis eget ante.
 5. Sed ultricies dignissim sagittis.
 command: all content deleted from mytextfile.txt
 command: mytextfile.txt is empty
+command: mytextfile.txt is empty
 command: 

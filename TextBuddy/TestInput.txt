@@ -27,5 +27,6 @@ display
 sort
 display
 clear
+sort
 display
 exit
