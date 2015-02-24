@@ -1,9 +1,7 @@
 public class Command {
-	private CommandType _commandType;
-	private String _commandArgument;
-	private String _originalCommand;
 	
 	// Valid commands types a user may input
+	
 	private static final String ADD_COMMAND = "add";
 	private static final String CLEAR_COMMAND = "clear";
 	private static final String DELETE_COMMAND = "delete";
@@ -11,6 +9,12 @@ public class Command {
 	private static final String EXIT_COMMAND = "exit";
 	private static final String SEARCH_COMMAND = "search";
 	private static final String SORT_COMMAND = "sort";
+	
+	// Instance variables
+	
+	private CommandType _commandType;
+	private String _commandArgument;
+	private String _originalCommand;
 	
 	protected static enum CommandType {
 		ADD,
