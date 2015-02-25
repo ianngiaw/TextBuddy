@@ -1,4 +1,5 @@
 package com.textbuddy.main;
+
 public class Command {
 	
 	// Valid commands types a user may input
