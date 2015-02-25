@@ -7,70 +7,89 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.textbuddy.main.TextStorage;
 
 
 public class TestTextStorage {
+
+	static final String LINE_1 = "line1";
+	static final String LINE_2 = "line2";
+	static final String LINE_3 = "line3";
 	
-	TextStorage textStorage = new TextStorage("testTextStorage.txt");;
+	TextStorage textStorage;
+	List<String> list;
+	
+	@Before
+	public void setupTextStorage () throws IOException {
+		textStorage = new TextStorage("testTextStorage.txt");
+		textStorage.addLine(LINE_1);
+		textStorage.addLine(LINE_2);
+		textStorage.addLine(LINE_3);
+	}
+	
+	@Before
+	public void setupLists () {
+		list = new ArrayList<String>();
+		list.add(LINE_1);
+		list.add(LINE_2);
+		list.add(LINE_3);
+	}
 	
 	@After
 	public void clearTextStorage () throws IOException {
 		textStorage.clearFile();
 	}
 
-	@Test
-	public void testTextStorage() {
-		TextStorage blank = new TextStorage("");
-		assertEquals(false, blank.isUsable());
-		
-		TextStorage space = new TextStorage(" ");
-		assertEquals(false, space.isUsable());
+	@Test(expected=IOException.class)
+	public void testTextStorageBlank () throws IOException {
+		new TextStorage("");
 	}
-
-	@Test
-	public void testIsUsable() {
-		assertEquals(true, textStorage.isUsable());
-	}
-
-	@Test
-	public void testGetLines() throws IOException {
-		List<String> list = new ArrayList<String>();
-		String line1 = "line1";
-		String line2 = "line2";
-		String line3 = "line3";
-		
-		list.add(line1);
-		list.add(line2);
-		list.add(line3);
-		
-		textStorage.addLine(line1);
-		textStorage.addLine(line2);
-		textStorage.addLine(line3);
 	
+	@Test(expected=IOException.class)
+	public void testTextStorageSpace () throws IOException {
+		new TextStorage(" ");
+	}
+
+	@Test
+	public void testGetLines() throws IOException {	
 		assertEquals(list, textStorage.getLines());
 	}
 
 	@Test
-	public void testIsValidLineNumber() throws IOException {
-		List<String> list = new ArrayList<String>();
-		String line1 = "line1";
-		String line2 = "line2";
-		String line3 = "line3";
-
-		list.add(line1);
-		list.add(line2);
-		list.add(line3);
-		
+	public void testIsValid1 () throws IOException {
 		assertEquals(true, textStorage.isValidLineNumber(1, list));
-		assertEquals(false, textStorage.isValidLineNumber(0, list));
-		assertEquals(false, textStorage.isValidLineNumber(-1, list));
-		assertEquals(true, textStorage.isValidLineNumber(3, list));
-		assertEquals(true, textStorage.isValidLineNumber(2, list));
-		assertEquals(false, textStorage.isValidLineNumber(4, list));
-		assertEquals(false, textStorage.isValidLineNumber(100, list));
 	}
 
+	@Test
+	public void testIsValid0 () throws IOException {
+		assertEquals(false, textStorage.isValidLineNumber(0, list));
+	}
+	
+	@Test
+	public void testIsValidNeg1 () throws IOException {
+		assertEquals(false, textStorage.isValidLineNumber(-1, list));
+	}
+	
+	@Test
+	public void testIsValid3 () throws IOException {
+		assertEquals(true, textStorage.isValidLineNumber(3, list));
+	}
+
+	@Test
+	public void testIsValid2 () throws IOException {
+		assertEquals(true, textStorage.isValidLineNumber(2, list));
+	}
+	
+	@Test
+	public void testIsValid4 () throws IOException {
+		assertEquals(false, textStorage.isValidLineNumber(4, list));
+	}
+	
+	@Test
+	public void testIsValid100 () throws IOException {
+		assertEquals(false, textStorage.isValidLineNumber(100, list));
+	}
 }
