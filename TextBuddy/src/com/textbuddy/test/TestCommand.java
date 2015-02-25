@@ -1,11 +1,10 @@
 package com.textbuddy.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import com.textbuddy.main.Command;
-import com.textbuddy.main.Command.CommandType;
 
 
 public class TestCommand {
