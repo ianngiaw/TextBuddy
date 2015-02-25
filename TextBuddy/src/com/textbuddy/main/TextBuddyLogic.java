@@ -40,12 +40,13 @@ public class TextBuddyLogic {
 	}
 	
 	private void setUpStorage () {
-		_textStorage = new TextStorage(_fileName);
-		if (_textStorage.isUsable()) {
-			TextBuddy.printFileReady(_fileName);
-		} else {
+		try {
+			_textStorage = new TextStorage(_fileName);
+		} catch (IOException e) {
 			TextBuddy.exitWithErrorMessage(MESSAGE_FILE_INITIALIZATION_ERROR);
+			return;
 		}
+		TextBuddy.printFileReady(_fileName);
 	}
 	
 	public String executeCommand (String userCommand) {
