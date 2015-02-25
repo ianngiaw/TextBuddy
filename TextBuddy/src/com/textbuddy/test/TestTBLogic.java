@@ -1,8 +1,10 @@
 package com.textbuddy.test;
+
 import static org.junit.Assert.assertEquals;
-import TextBuddyLogic;
 
 import org.junit.Test;
+
+import com.textbuddy.main.TextBuddyLogic;
 
 public class TestTBLogic {
 	TextBuddyLogic logic = new TextBuddyLogic("mytextfile.txt");

@@ -1,3 +1,4 @@
+package com.textbuddy.main;
 public class Command {
 	
 	// Valid commands types a user may input
@@ -16,7 +17,7 @@ public class Command {
 	private String _commandArgument;
 	private String _originalCommand;
 	
-	protected static enum CommandType {
+	public static enum CommandType {
 		ADD,
 		CLEAR,
 		DELETE,

@@ -1,6 +1,6 @@
 package com.textbuddy.test;
+
 import static org.junit.Assert.assertEquals;
-import TextStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Test;
+
+import com.textbuddy.main.TextStorage;
 
 
 public class TestTextStorage {
