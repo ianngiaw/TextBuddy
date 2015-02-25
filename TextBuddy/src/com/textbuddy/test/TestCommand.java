@@ -11,29 +11,29 @@ public class TestCommand {
 	
 	@Test
 	public void testParseSearchBlank () {
-		final Command searchBlankCommand = Command.parseCommand("search");
-		assertEquals(Command.CommandType.SEARCH, searchBlankCommand.getCommandType());
-		assertEquals("", searchBlankCommand.getCommandArgument());
+		final Command searchBlank = Command.parseCommand("search");
+		assertEquals(Command.CommandType.SEARCH, searchBlank.getCommandType());
+		assertEquals("", searchBlank.getCommandArgument());
 	}
 	
 	@Test
 	public void testParseSearchSpace () {
-		final Command searchSpacedCommand = Command.parseCommand("search     ");
-		assertEquals(Command.CommandType.SEARCH, searchSpacedCommand.getCommandType());
-		assertEquals("", searchSpacedCommand.getCommandArgument());
+		final Command searchSpaced = Command.parseCommand("search     ");
+		assertEquals(Command.CommandType.SEARCH, searchSpaced.getCommandType());
+		assertEquals("", searchSpaced.getCommandArgument());
 	}
 	
 	@Test
 	public void testParseSearch123 () {
-		final Command search123Command = Command.parseCommand("search 123");
-		assertEquals(Command.CommandType.SEARCH, search123Command.getCommandType());
-		assertEquals("123", search123Command.getCommandArgument());
+		final Command search123 = Command.parseCommand("search 123");
+		assertEquals(Command.CommandType.SEARCH, search123.getCommandType());
+		assertEquals("123", search123.getCommandArgument());
 	}
 	
 	@Test
 	public void testParseSearchWrongCase () {
-		final Command searchWrongCseCommand = Command.parseCommand("SeArCh");
-		assertEquals(Command.CommandType.INVALID, searchWrongCseCommand.getCommandType());
+		final Command searchWrongCase = Command.parseCommand("SeArCh");
+		assertEquals(Command.CommandType.INVALID, searchWrongCase.getCommandType());
 	}
 	
 	@Test
