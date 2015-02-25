@@ -14,19 +14,10 @@ import java.util.List;
 public class TextStorage {
 	
 	private File _textFile;
-	private boolean _isUsable = true;
 	
-	public TextStorage (String fileName) {
+	public TextStorage (String fileName) throws IOException {
 		_textFile = new File(fileName);
-		try {
-			_textFile.createNewFile();
-		} catch (IOException e) {
-			_isUsable = false;
-		}
-	}
-	
-	public boolean isUsable () {
-		return _isUsable;
+		_textFile.createNewFile();
 	}
 	
 	/**
