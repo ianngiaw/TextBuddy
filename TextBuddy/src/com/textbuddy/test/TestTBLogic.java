@@ -1,4 +1,6 @@
+package com.textbuddy.test;
 import static org.junit.Assert.assertEquals;
+import TextBuddyLogic;
 
 import org.junit.Test;
 

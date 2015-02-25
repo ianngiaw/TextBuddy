@@ -1,4 +1,6 @@
+package com.textbuddy.test;
 import static org.junit.Assert.assertEquals;
+import TextStorage;
 
 import java.io.IOException;
 import java.util.ArrayList;
