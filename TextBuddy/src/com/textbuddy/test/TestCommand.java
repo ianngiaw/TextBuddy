@@ -10,28 +10,28 @@ import com.textbuddy.main.Command;
 public class TestCommand {
 	
 	@Test
-	public void testParseSearchBlankCommand () {
+	public void testParseSearchBlank () {
 		final Command searchBlankCommand = Command.parseCommand("search");
 		assertEquals(Command.CommandType.SEARCH, searchBlankCommand.getCommandType());
 		assertEquals("", searchBlankCommand.getCommandArgument());
 	}
 	
 	@Test
-	public void testParseSearchSpaceCommand () {
+	public void testParseSearchSpace () {
 		final Command searchSpacedCommand = Command.parseCommand("search     ");
 		assertEquals(Command.CommandType.SEARCH, searchSpacedCommand.getCommandType());
 		assertEquals("", searchSpacedCommand.getCommandArgument());
 	}
 	
 	@Test
-	public void testParseSearch123Command () {
+	public void testParseSearch123 () {
 		final Command search123Command = Command.parseCommand("search 123");
 		assertEquals(Command.CommandType.SEARCH, search123Command.getCommandType());
 		assertEquals("123", search123Command.getCommandArgument());
 	}
 	
 	@Test
-	public void testParseSearchWrongCaseCommand () {
+	public void testParseSearchWrongCase () {
 		final Command searchWrongCseCommand = Command.parseCommand("SeArCh");
 		assertEquals(Command.CommandType.INVALID, searchWrongCseCommand.getCommandType());
 	}
