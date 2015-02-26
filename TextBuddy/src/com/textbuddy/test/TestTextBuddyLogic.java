@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.textbuddy.main.Command;
 import com.textbuddy.main.TextBuddyLogic;
 
-public class TestTBLogic {
+public class TestTextBuddyLogic {
 	TextBuddyLogic logic = new TextBuddyLogic("testTBLogic.txt");
 	
 	@Before
