@@ -18,17 +18,6 @@ public class Command {
 	private String _commandArgument;
 	private String _originalCommand;
 	
-	public static enum CommandType {
-		ADD,
-		CLEAR,
-		DELETE,
-		DISPLAY,
-		EXIT,
-		SEARCH,
-		SORT,
-		INVALID
-	};
-	
 	private Command (CommandType commandType, String argument, String userCommand) {
 		this._commandType = commandType;
 		this._commandArgument = argument;

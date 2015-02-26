@@ -51,22 +51,22 @@ public class TextBuddyLogic {
 	
 	public String executeCommand (String userCommand) {
 		Command command = Command.parseCommand(userCommand);
-		final Command.CommandType commandType = command.getCommandType();
+		final CommandType commandType = command.getCommandType();
 		
-		if (commandType == Command.CommandType.ADD) {
+		if (commandType == CommandType.ADD) {
 			return executeAddCommand(command);			
-		} else if (commandType == Command.CommandType.CLEAR) {
+		} else if (commandType == CommandType.CLEAR) {
 			return executeClearCommand();
-		} else if (commandType == Command.CommandType.DELETE) {
+		} else if (commandType == CommandType.DELETE) {
 			return executeDeleteCommand(command);
-		} else if (commandType == Command.CommandType.DISPLAY) {
+		} else if (commandType == CommandType.DISPLAY) {
 			return executeDisplayCommand();
-		} else if (commandType == Command.CommandType.EXIT) {
+		} else if (commandType == CommandType.EXIT) {
 			TextBuddy.exitProgram();
 			return null;
-		} else if (commandType == Command.CommandType.SEARCH) {
+		} else if (commandType == CommandType.SEARCH) {
 			return executeSearchCommand(command);
-		} else if (commandType == Command.CommandType.SORT) {
+		} else if (commandType == CommandType.SORT) {
 			return executeSortCommand();
 		} else {
 			return formatResponseInvalidCommand(userCommand);
