@@ -67,6 +67,10 @@ public class TestTextBuddyLogic {
 	public void testExecuteCommandSortFilled () {
 		String sortResponse = logic.executeCommand("sort");
 		assertEquals("testTBLogic.txt has been sorted alphabetically", sortResponse);
+		
+		String sortedLines = logic.executeCommand("display");
+		assertEquals("1. a\n2. aa\n3. ab\n4. ac\n5. ad\n6. b\n7. c\n8. d",
+					 sortedLines);
 	}
 	
 	// tests for private methods
@@ -100,6 +104,10 @@ public class TestTextBuddyLogic {
 		Method executeSortCommand = getPrivateMethod(logic.getClass(), "executeSortCommand", null);
 		String response = (String) executeSortCommand.invoke(logic, new Object[]{});
 		assertEquals("testTBLogic.txt has been sorted alphabetically", response);
+		
+		String sortedLines = logic.executeCommand("display");
+		assertEquals("1. a\n2. aa\n3. ab\n4. ac\n5. ad\n6. b\n7. c\n8. d",
+					 sortedLines);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
