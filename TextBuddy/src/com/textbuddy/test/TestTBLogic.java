@@ -2,10 +2,16 @@ package com.textbuddy.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.textbuddy.main.Command;
 import com.textbuddy.main.TextBuddyLogic;
 
 public class TestTBLogic {
@@ -63,5 +69,52 @@ public class TestTBLogic {
 	public void testExecuteCommandSortFilled () {
 		String sortResponse = logic.executeCommand("sort");
 		assertEquals("testTBLogic.txt has been sorted alphabetically", sortResponse);
+	}
+	
+	// tests for private methods
+	
+	@Test
+	public void testExecuteSearchCommandBlank () throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Command command = Command.parseCommand("search");
+		Method executeSearchCommand = getPrivateMethod(logic.getClass(), "executeSearchCommand", new Class[]{Command.class});
+		String response = (String) executeSearchCommand.invoke(logic, new Object[]{command});
+		assertEquals("no search terms", response);
+	}
+	
+	@Test
+	public void testExecuteSearchCommandD () throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Command command = Command.parseCommand("search d");
+		Method executeSearchCommand = getPrivateMethod(logic.getClass(), "executeSearchCommand", new Class[]{Command.class});
+		String response = (String) executeSearchCommand.invoke(logic, new Object[]{command});
+		assertEquals("1. d\n7. ad", response);
+	}
+	
+	@Test
+	public void testExecuteSearchCommandAa () throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Command command = Command.parseCommand("search aa");
+		Method executeSearchCommand = getPrivateMethod(logic.getClass(), "executeSearchCommand", new Class[]{Command.class});
+		String response = (String) executeSearchCommand.invoke(logic, new Object[]{command});
+		assertEquals("6. aa", response);
+	}
+	
+	@Test
+	public void testExecuteSortCommand () throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Method executeSortCommand = getPrivateMethod(logic.getClass(), "executeSortCommand", null);
+		String response = (String) executeSortCommand.invoke(logic, new Object[]{});
+		assertEquals("testTBLogic.txt has been sorted alphabetically", response);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private Method getPrivateMethod (Class privateObjectClass, String methodName, Class[] argClasses) {
+		Method privateMethod;
+		try {
+			privateMethod = privateObjectClass.getDeclaredMethod(methodName, argClasses);
+		} catch (NoSuchMethodException e) {
+			return null;
+		} catch (SecurityException e) {
+			return null;
+		}
+		privateMethod.setAccessible(true);
+		return privateMethod;
 	}
 }
