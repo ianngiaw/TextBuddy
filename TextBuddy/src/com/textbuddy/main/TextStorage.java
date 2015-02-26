@@ -20,21 +20,14 @@ public class TextStorage {
 		_textFile.createNewFile();
 	}
 	
-	/**
-	 * Adds a line of text provided to the end of a text file.
-	 * @param line The text to be added to the end of the file. Must not be null.
-	 * @throws IOException Thrown if an I/O Error occurred
-	 */
+	// Adds a line of text provided to the end of a text file
 	public void addLine (String line) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_textFile, true)));
 		out.println(line);
 		out.close();
 	}
 	
-	/**
-	 * Clears the entire file to an empty file
-	 * @throws IOException Thrown if an I/O Error occurred
-	 */
+	// Clears the entire file to become an empty file
 	public void clearFile () throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_textFile, false)));
 		// Print an empty string so as to ensure all contents of the file is deleted
@@ -42,11 +35,7 @@ public class TextStorage {
 		out.close();
 	}
 	
-	/**
-	 * Extracts all lines in the text file
-	 * @return Every line in the text file in the form of a list of strings, one string per line
-	 * @throws IOException Thrown if an I/O Error occurred
-	 */
+	// Extracts all lines in the text file to a list of strings
 	public List <String> getLines () throws IOException{
 		List<String> lines = new ArrayList<String>();
 		String currentLine;
@@ -59,23 +48,14 @@ public class TextStorage {
 		return lines;
 	}
 	
-	/**
-	 * Checks if a number provided is within the range of the length of the list.
-	 * @param lineNumber Any positive integer
-	 * @param lines A list of strings used to compare to the integer
-	 * @return True if the number is a valid line number, false if otherwise
-	 */
+	// Checks if a number provided is within the range of the length of the list
 	public boolean isValidLineNumber (int lineNumber, List<String> lines) {
 		boolean isLessThanOrEqualToList = lineNumber <= lines.size();
 		boolean isMoreThanZero = lineNumber > 0;
 		return isLessThanOrEqualToList && isMoreThanZero;
 	}
 	
-	/**
-	 * Overwrites the entire text file, writing each line in the list as a new line in the file.
-	 * @param lines A list of strings to be written to the file.
-	 * @throws IOException Thrown if an I/O Error occurred
-	 */
+	// Overwrites the entire text file, writing each line in the list as a new line in the file
 	public void saveLinesToFile (List<String> lines) throws IOException {
 		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(_textFile, false)));
 		Iterator<String> iterator = lines.iterator();
