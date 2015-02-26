@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import com.textbuddy.main.TextStorage;
 
-
 public class TestTextStorage {
 
 	static final String LINE_1 = "line1";

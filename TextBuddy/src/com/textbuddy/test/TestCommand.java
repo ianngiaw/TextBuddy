@@ -7,7 +7,6 @@ import org.junit.Test;
 import com.textbuddy.main.Command;
 import com.textbuddy.main.CommandType;
 
-
 public class TestCommand {
 	
 	@Test
